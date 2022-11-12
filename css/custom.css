@@ -1,3 +1,7 @@
+  /* 去掉侧边栏最新吐槽 */
+  .latestBB {
+    display: none;
+    }
 /*设置鼠标样式*/
 body {
     cursor: url(https://cdn.jsdelivr.net/gh/sviptzk/HexoStaticFile@latest/Hexo/img/default.cur),
@@ -25,4 +29,3 @@ a,img {
   #footer{
     background: transparent!important;
   }
-  
