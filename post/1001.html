@@ -1,13 +1,13 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>编译原理学习笔记 | Ann の 小窝</title><meta name="keywords" content="编译原理"><meta name="author" content="A-624"><meta name="copyright" content="A-624"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Chapter 3 语法分析 接受词法分析的内容并传递给下一个部分  上下文无关文法：另一种表示语言的方法 正规式表示：重复必须要指定的有限，或者无限。不能描述配对或嵌套 上下文无关文法（文法）：比正规式更加强，一个四元组（VT,VN,S,P）（V_T , V_N , S, P）（VT​,VN​,S,P）   VTV_TVT​ : 终结符集合 (即和待分析的串即代码的具体内容)  字母表前面的小写">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>编译原理学习笔记 | Ann の 小窝</title><meta name="keywords" content="编译原理"><meta name="author" content="A-624"><meta name="copyright" content="A-624"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="编译原理学习笔记">
 <meta property="og:type" content="article">
 <meta property="og:title" content="编译原理学习笔记">
 <meta property="og:url" content="https://a-624.github.io/post/1001.html">
 <meta property="og:site_name" content="Ann の 小窝">
-<meta property="og:description" content="Chapter 3 语法分析 接受词法分析的内容并传递给下一个部分  上下文无关文法：另一种表示语言的方法 正规式表示：重复必须要指定的有限，或者无限。不能描述配对或嵌套 上下文无关文法（文法）：比正规式更加强，一个四元组（VT,VN,S,P）（V_T , V_N , S, P）（VT​,VN​,S,P）   VTV_TVT​ : 终结符集合 (即和待分析的串即代码的具体内容)  字母表前面的小写">
+<meta property="og:description" content="编译原理学习笔记">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://w.wallhaven.cc/full/gp/wallhaven-gpzve7.png">
 <meta property="article:published_time" content="2022-10-08T23:54:21.000Z">
-<meta property="article:modified_time" content="2022-11-25T01:51:22.191Z">
+<meta property="article:modified_time" content="2022-12-05T12:25:41.151Z">
 <meta property="article:author" content="A-624">
 <meta property="article:tag" content="编译原理">
 <meta name="twitter:card" content="summary">
@@ -53,7 +53,7 @@
   isHome: false,
   isHighlightShrink: false,
   isToc: true,
-  postUpdate: '2022-11-25 09:51:22'
+  postUpdate: '2022-12-05 20:25:41'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -142,63 +142,393 @@
       }
     }
     detectApple()
-    })(window)</script><link rel="stylesheet" href="/css/rightMenu.css"><link rel="stylesheet" href="/css/custom.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/js-heo@1.0.11/bb/showbb_in_index.css"><link rel="stylesheet" href="/css/bber.css"><link rel="stylesheet" href="/css/background.css"><link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/css/main.css"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-butterfly-categories-card/lib/categorybar.css"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiperstyle.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-filter-gitcalendar/lib/gitcalendar.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@1.0.17/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="wizard-scene"><div class="wizard-objects"><div class="wizard-square"></div><div class="wizard-circle"></div><div class="wizard-triangle"></div></div><div class="wizard"><div class="wizard-body"></div><div class="wizard-right-arm"><div class="wizard-right-hand"></div></div><div class="wizard-left-arm"><div class="wizard-left-hand"></div></div><div class="wizard-head"><div class="wizard-beard"></div><div class="wizard-face"><div class="wizard-adds"></div></div><div class="wizard-hat"><div class="wizard-hat-of-the-hat"></div><div class="wizard-four-point-star --first"></div><div class="wizard-four-point-star --second"></div><div class="wizard-four-point-star --third"></div></div></div></div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/favicon.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">22</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 碎碎念</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child" style="right:-90px"><li><a class="site-page child" href="/ispeaker/"><i class="fa-fw fas fa-paper-plane"></i><span> 日志</span></a></li><li><a class="site-page child" href="/shuoshuo/"><i class="fa-fw fas fa-tags"></i><span> 说说</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 工具箱</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Ann の 小窝</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 碎碎念</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child" style="right:-90px"><li><a class="site-page child" href="/ispeaker/"><i class="fa-fw fas fa-paper-plane"></i><span> 日志</span></a></li><li><a class="site-page child" href="/shuoshuo/"><i class="fa-fw fas fa-tags"></i><span> 说说</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 工具箱</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">编译原理学习笔记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-10-08T23:54:21.000Z" title="发表于 2022-10-09 07:54:21">2022-10-09</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-11-25T01:51:22.191Z" title="更新于 2022-11-25 09:51:22">2022-11-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/notebook/">notebook</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">11.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>37分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="编译原理学习笔记"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><h1 id="Chapter-3-语法分析">Chapter 3 语法分析</h1>
-<p>接受词法分析的内容并传递给下一个部分</p>
+    })(window)</script><link rel="stylesheet" href="/css/rightMenu.css"><link rel="stylesheet" href="/css/custom.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/js-heo@1.0.11/bb/showbb_in_index.css"><link rel="stylesheet" href="/css/bber.css"><link rel="stylesheet" href="/css/background.css"><link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/css/main.css"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-butterfly-categories-card/lib/categorybar.css"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiperstyle.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@1.0.17/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-filter-gitcalendar/lib/gitcalendar.css" media="print" onload="this.media='all'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="wizard-scene"><div class="wizard-objects"><div class="wizard-square"></div><div class="wizard-circle"></div><div class="wizard-triangle"></div></div><div class="wizard"><div class="wizard-body"></div><div class="wizard-right-arm"><div class="wizard-right-hand"></div></div><div class="wizard-left-arm"><div class="wizard-left-hand"></div></div><div class="wizard-head"><div class="wizard-beard"></div><div class="wizard-face"><div class="wizard-adds"></div></div><div class="wizard-hat"><div class="wizard-hat-of-the-hat"></div><div class="wizard-four-point-star --first"></div><div class="wizard-four-point-star --second"></div><div class="wizard-four-point-star --third"></div></div></div></div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/favicon.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">16</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">21</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 碎碎念</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child" style="right:-90px"><li><a class="site-page child" href="/ispeaker/"><i class="fa-fw fas fa-paper-plane"></i><span> 日志</span></a></li><li><a class="site-page child" href="/shuoshuo/"><i class="fa-fw fas fa-tags"></i><span> 说说</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 工具箱</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Ann の 小窝</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 碎碎念</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child" style="right:-90px"><li><a class="site-page child" href="/ispeaker/"><i class="fa-fw fas fa-paper-plane"></i><span> 日志</span></a></li><li><a class="site-page child" href="/shuoshuo/"><i class="fa-fw fas fa-tags"></i><span> 说说</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 工具箱</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">编译原理学习笔记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-10-08T23:54:21.000Z" title="发表于 2022-10-09 07:54:21">2022-10-09</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-12-05T12:25:41.151Z" title="更新于 2022-12-05 20:25:41">2022-12-05</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/notebook/">notebook</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">20.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>64分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="编译原理学习笔记"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><h1 id="Chapter-1-概述">Chapter 1 概述</h1>
+<blockquote>
+<p>笔记参考中科大李卫海教授的ppt，参考书为《编译原理》陈意云。实验部分是Tinyc的学习和修改，参考<a target="_blank" rel="noopener" href="https://pandolia.net/tinyc/ch3_Pcode_syntax_a.html">实验文档链接</a>。初次学习，如有错误，还望指正，谢谢。</p>
+</blockquote>
+<p><strong>概述</strong>：编译器的目标是将源程序翻译成可执行的机器代码，左侧为前端部分，右侧为后端。</p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cdn.jsdelivr.net/gh/A-624/blog_img/img/image-20221128072120136.png" alt="image-20221128072120136" style="zoom:67%;" />
+<p><strong>遍</strong>：将源程序输入对应模块得到输出。通常前端会做“一”遍，在词法分析的同时做语法分析等（不会完全串行），后端可能会多种优化，做多遍。</p>
+<details class="folding-tag" ><summary> 解释器和编译器的补充 </summary>
+              <div class='content'>
+              <table><thead><tr><th>类别</th><th>描述</th><th>对象</th><th>运行时机</th><th>应用语言</th><th>中间代码</th><th>速度</th><th>错误</th></tr></thead><tbody><tr><td>解释器（火锅）</td><td>高级到低级语言，只有前端四个过程</td><td>程序整体编译</td><td>程序运行前</td><td>编程语言，如C、c++、c#、Scala</td><td>有</td><td>快</td><td>同时显示所有错误，难，出现错误后停止，后<strong>从头编译</strong></td></tr><tr><td>编译器（家常菜）</td><td>高级程序语句转换成机器代码，边解释边执行</td><td>逐行编译</td><td>程序运行时</td><td>PHP、Ruby、Python</td><td>无</td><td>慢</td><td>出现错误则阻止翻译，删除后<strong>继续</strong></td></tr></tbody></table><blockquote><p>一般我们认为的低级语言有汇编（助记符）和机器语言等。</p><p>解释器的优化过程困难，执行效率低，前端部分需反复分析</p></blockquote>
+              </div>
+            </details>
+<details class="folding-tag" ><summary> 实验的部分说明 </summary>
+              <div class='content'>
+              <p>tinyc是一个简单的c语言编译器</p><ul><li>所有 C 语法的规则均适用于 TinyC 语法，<ul><li>语句有赋值，函数调用，if和while。</li><li>支持算符：+, -, *, /, %, ==, !=, &gt;, &lt;, &gt;=, &lt;=, &amp;&amp;, ||, !, -</li><li>不支持 ++ 和 - -</li><li>赋值语句只能单独使用，不能放在表达式内部</li></ul></li><li>只有 int 一种数据类型（32位）</li><li>函数的返回值可以声明为 int 和 void 两种类型，但编译器会自动为 void 函数返回一个 int 值</li><li>不支持全局变量，只有<strong>局部变量</strong>，变量须先声明再使用，且变量声明必须放在函数体的最前面，不支持声明变量的时候赋初值。</li><li><strong>不支持函数原型声明</strong>，函数声明必须和定义在一起，函数无需先定义再使用</li><li>整个程序必须有一个不带参数的 <strong>main</strong> 函数，此为程序的入口。</li><li>不支持 #include 等预处理命令，不支持多行注释。</li></ul>
+              </div>
+            </details>
+<p><strong>步骤简介</strong></p>
+<ul>
+<li>
+<p>前端</p>
+<ul>
+<li>
+<p>词法分析（线性分析/扫描）：<strong>源文件</strong>的字符流拆分分一个个的词（<strong>token</strong>）</p>
+<ul>
+<li>字符流中<strong>声明过的变量</strong>等存储在符号表中，<strong>识别变量</strong>、<strong>符号</strong>等并进行划分，输出<strong>记号流</strong>。</li>
+</ul>
+</li>
+<li>
+<p>语法分析   （分析）：构造语法树</p>
+<ul>
+<li><strong>检查</strong>记号流是否符合编程的<strong>语法</strong>规定，并用表示为树形的中间表，如<strong>语法树</strong>。</li>
+</ul>
+</li>
+<li>
+<p>语义分析</p>
+<ul>
+<li>简单来说除了纠错外会对语法树升级添加部分需要做的操作。</li>
+</ul>
+</li>
+<li>
+<p>中间代码生成器</p>
+<ul>
+<li>语法树 -&gt; 三地址中间代码</li>
+</ul>
+<blockquote>
+<p>产生更低级的显式中间表示，这种中间表示想象成一种抽象机的程序，三地址中间代码是其中一种表示，每个指令最多有三个操作数，除了赋值算符以外最多有一个算符，在生成时编译器需要产生临时变量名，决定运算优先顺序等。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>
+<p>后端</p>
+<ul>
+<li>代码优化器：独立于机器的代码优化阶段改进中间代码产生较好的目标代码（仍然是中间代码），例子中对于变量数量和类型转化也做了优化。</li>
+<li>代码生成器：将三地址中间代码转化为汇编代码。</li>
+</ul>
+</li>
+</ul>
+<details class="folding-tag" ><summary> 编译技术的应用 </summary>
+              <div class='content'>
+              <p><strong>高级语言的实现</strong></p><ul><li>高级语言<strong>易</strong>于编程但是运行速度较<strong>慢</strong>，和低级语言相反，低级语言难以编写、易出错、难维护。</li><li>流行语言的演变向抽象的方向进行，同时刺激着编译器的优化。</li></ul><p><strong>计算机结构体系的优化</strong></p><ul><li>计算机体系结构迅速演化：需要并行接纳多处理器、使内存分层更有效而非集中在优化处理器执行</li><li>计算机性能提升需要编译器充分利用其特征代码。比如RISC是编译器计数影响计算机体系结构</li><li>二进制翻译：翻译不同机器码执行。</li><li>数据库查询解释器。</li></ul><p><strong>改进软件开发效率</strong></p><ul><li>类型检查：是一种捕捉程序中前后不一致的成熟而有效的技术</li><li>边界检查：数据流分析技术可用来定位缓冲区溢出</li><li>内存管理：自动的内存管理删除内存泄漏等内存管理错误</li></ul>
+              </div>
+            </details>
+<h1 id="Chapter-2-词法生成">Chapter 2 词法生成</h1>
+<h2 id="流程图">流程图</h2>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cdn.jsdelivr.net/gh/A-624/blog_img/img/image-20220831104514234.png" alt="image-20220831104514234" style="zoom:50%;" />
+<ul>
+<li><strong>扫描</strong>源文件的字符流，<strong>过滤</strong>掉字符流中的<strong>空格</strong>、注释等，（宏定义的预处理）</li>
+<li>由于以后的记号流可能没有行的概念，记住源程序的行号以标记出错位置
+<ul>
+<li>某些编辑器中复制源程序并把错误信息嵌入其中也是它的工作</li>
+</ul>
+</li>
+<li>拆分成以token（记号）为单位的记号流被传递给语法分析器</li>
+</ul>
+<p><strong>概念解释</strong></p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>解释</th>
+<th>补充</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>记号token</td>
+<td>形式：&lt;记号名，属性&gt;</td>
+<td></td>
+</tr>
+<tr>
+<td>记号名</td>
+<td><strong>同类</strong>词法单元<strong>共用</strong>，比如数字</td>
+<td>人为规定，比如用NUM表示整数</td>
+</tr>
+<tr>
+<td>属性值</td>
+<td>特征值，比如符号表中的条目（指针）</td>
+<td>如果记号仅一个实例，如关键字，算符等，使用&lt;number,60&gt;即可</td>
+</tr>
+<tr>
+<td>关键字，一般等同保留字</td>
+<td>保留字是语言预先确定了含义的词法单元</td>
+<td></td>
+</tr>
+<tr>
+<td>标准标识符</td>
+<td>标准标识符也是预先确定了含义的标识符，但程序可以重新声明它的含义</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>举例</strong></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//tinyc</span></span><br><span class="line">a = value + sum(<span class="number">5</span>, <span class="number">123</span>);</span><br><span class="line"><span class="comment">//token流 表示方式略有不同</span></span><br><span class="line">ID&lt;a&gt; <span class="string">&#x27;=&#x27;</span> ID&lt;value&gt; <span class="string">&#x27;+&#x27;</span> ID&lt;sum&gt; <span class="string">&#x27;(&#x27;</span> NUM&lt;<span class="number">5</span>&gt; <span class="string">&#x27;,&#x27;</span> NUM&lt;<span class="number">123</span>&gt; <span class="string">&#x27;)&#x27;</span> <span class="string">&#x27;;&#x27;</span></span><br><span class="line"><span class="comment">//这里运算符单独视作token，有时候也有用relation表示&lt; &gt;等一类运算符，均为人为规定</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>表达式的形式化定义</strong>：任何标识符和数字和组合都是表达式（符合正常认知），可使用分析树观察结构。</p>
+<p>tips：使用结构体、共用体（比如以char类型存储，以int类型输出）更好的利用资源；早期标准c的函数声明  ： long fuc（a) ; int a; //不会进行形参和实参的检查</p>
+</blockquote>
+<p><strong>词法错误</strong></p>
+<ul>
+<li><strong>局部</strong>的观点（无上下文），可能不知道if 写成了fi，但2.a作为实数会报错（a不是数字）</li>
+<li>发现错误后会实现紧急方式的<strong>错误恢复</strong>（保证找出来所有错误后一次性报错），可能删掉符号来保证后面程序的正确识别，或者进行错误修补，进行增删替换或者交换的尝试。</li>
+</ul>
+<h2 id="词法记号的描述和识别">词法记号的描述和识别</h2>
+<h3 id="串和语言">串和语言</h3>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>解释</th>
+<th>补充</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>字母表</td>
+<td>符号的<strong>有限</strong>集合</td>
+<td>字面意思，比如{0，1}是二进制串字母表</td>
+</tr>
+<tr>
+<td>串</td>
+<td>字母表符号的<strong>有限</strong>序列</td>
+<td>空串是 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ϵ</mi></mrow><annotation encoding="application/x-tex">\epsilon</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">ϵ</span></span></span></span></td>
+</tr>
+<tr>
+<td>语言和句子</td>
+<td>字母表中的串的部分集合，集合中的串为句子</td>
+<td></td>
+</tr>
+<tr>
+<td>串的运算（元素）</td>
+<td>选择: x|y；连接（积）：xy；<strong>幂：零次方为空串</strong></td>
+<td><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi><mi>ϵ</mi><mo>=</mo><mi>s</mi></mrow><annotation encoding="application/x-tex">s\epsilon=s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">sϵ</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">s</span></span></span></span></td>
+</tr>
+<tr>
+<td>语言的运算（集合）</td>
+<td>并：$A \cup B=\lbrace s</td>
+<td>s\in A \quad or\quad s \in B\rbrace$ <br />连接：$A  B=\lbrace st</td>
+</tr>
+</tbody>
+</table>
+<h3 id="正规式：">正规式：</h3>
+<p>使用<strong>字符嵌套</strong>的运算表示串的集合，即<strong>语言</strong>。正规式定义的方式是从字符表中选择字符 a 作为{a}的正规式（下图第一行），然后通过正规式的运算（类似于<strong>串的运算</strong>），来定义一系列串的集合，即语言。</p>
+<p>需要注意的是，嵌套表示的全都是语言的运算，即符合语言构造中所有串的运算。</p>
+<p>优先级：闭包（左结合）&gt; 连接（左） &gt; 并（左）</p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20220831221051104.png" alt="image-20220831221051104" style="zoom:67%;" />
+<p>例子：</p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20220902080051041.png" alt="image-20220902080051041" style="zoom: 67%;" />
+<p>蓝色部分生成的串有 01001101 和10 0000 10 ，还有 00 11 等随意选择后连接而成。</p>
+<p><strong>正规定义</strong>：名字-&gt;正规式</p>
+<p>正规式的简化表示：</p>
+<ul>
+<li><code>+</code>后缀：一或者多个实例，和闭包有相同优先级</li>
+<li>？后缀：零或一个实例</li>
+<li>[A-Za-z] 表示 A|B|C…|a|b|c|…</li>
+</ul>
+<p>举例：</p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20220902081145574.png" style="zoom:67%;" />
+<p>举例：词法分析中对于记号的识别问题</p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20220902081919100.png" alt="image-20220902081919100" style="zoom: 67%;" />
+<blockquote>
+<p>这里实现了如何忽略空白去读入原码中的记号，即将剩余输入的的<strong>前缀</strong>和ws比较，如果匹配，则跨过空格继续扫描，反之说明还没遇到空格。注意，这里的匹配是一种特殊的记号匹配，原码对应的ws不应该有记号名。</p>
+</blockquote>
+<p>举例：所有相邻数字都不相同的非空数字串</p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20221003202450129.png" alt="image-20221003202450129" style="zoom:67%;" />
+<ul>
+<li>
+<p>写&quot;0&quot;不相邻的正规式：answer -&gt; (0 | no_0 0  )（ no_0 0)*（no_0 | e）| no_0</p>
+<p>第一个<strong>选择</strong>路口时有无0，无则直接no_0 ，反之：<strong>第一个</strong>为0或者no_0+0的形式。即<strong>以0结尾的第一个串</strong>，后面选择：no_0甚至可以直接结束，或者0的出现为 <strong>非零串+零</strong>打包形态。要注意不以0结尾的但是后面出现0的情况。</p>
+</li>
+<li>
+<p>no_0 正规式的定义： 同样的思路，可以选择没有0和1，存在1 的时候</p>
+</li>
+</ul>
+<blockquote>
+<p>延申思路到所有相邻数字不相同的数字串，即可以为空串，同样，answer不是无0的时候，可以是0开头，或者以0结尾的第一个串，但此时并不要求这个串一定存在，如果不存在，后面第一个数也不是0（不然就相当于第一个数字是0了）。</p>
+</blockquote>
+<p><strong>正规定义的二义性</strong>：</p>
+<ul>
+<li>最长匹配：于正规表达式匹配的最长的字符串</li>
+<li>规则优先：扫描后一旦找到一个匹配的正则表达式，立即使用</li>
+<li>看空白，空白不被丢弃参与 词法判断后不需要这些</li>
+</ul>
+<h3 id="转换图">转换图</h3>
+<p>参考转换图来编写程序<strong>识别</strong>扫描的代码，从而得到正规式描述。</p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20220902083203607.png" alt="image-20220902083203607" style="zoom: 50%;" />
+<blockquote>
+<p>*表示多读一个字符，这个字符不在本次识别的内容会放在缓冲区，relop是关系算符的记号名</p>
+<p>另外关键字的识别不需要另外编写转化图，可以建立一张关键字表，installId()先查看关键字表，再查看标识符，如果都没有会新建一个标识符并返回指针。下图代表扫描字符是id的转换图。<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20220902084159118.png" alt="image-20220902084159118" style="zoom:50%;" /></p>
+</blockquote>
+<p>举例：无符号数的转换图</p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20220902084551923.png" alt="image-20220902084551923" style="zoom: 50%;" />
+<p>到达接受状态时调用过程installNUM（），把识别出来的数字放入数表。</p>
+<blockquote>
+<p>需要人为思考结束的阶段，无符号数结束可以在那些问号处</p>
+</blockquote>
+<p>举例：识别ws（无记号），注意，这些图都是可以合并的，将开始的状态合并，将22作为回到开始状态的记号</p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20220902085012493.png" alt="image-20220902085012493" style="zoom: 50%;" />
+<blockquote>
+<p>也可以使用转移矩阵，在状态下分别写上下次扫描符号后的跳转状态。不存在时写0</p>
+</blockquote>
+<h2 id="有限自动机">有限自动机</h2>
+<p>语言的识别器：一个布尔程序，判断是否是语言的句子，通过有限自动机将正规式翻译成识别器。<strong>识别某个正规式的语言里面的串</strong>。（扫描后能到达终结状态）</p>
+<h3 id="不确定的有限自动机（NFA）">不确定的有限自动机（NFA）</h3>
+<p>某个状态接收到同一个字符可能到的是不同状态。</p>
+<p>数学模型：（这里的空串是啥也没有自己乱走，表示并（选择））</p>
+<ul>
+<li>有限的状态集合 S</li>
+<li>符号集合$\sum $</li>
+<li>转换函数 move : <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mo>×</mo><mo stretchy="false">(</mo><mo>∑</mo><mo>∪</mo><mo stretchy="false">{</mo><mi>ϵ</mi><mo stretchy="false">}</mo><mo stretchy="false">)</mo><mo>→</mo><mi>P</mi><mo stretchy="false">(</mo><mi>S</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">S \times (\sum \cup\lbrace \epsilon\rbrace)\to P(S)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mop op-symbol small-op" style="position:relative;top:0em;">∑</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">∪</span><span class="mopen">{</span><span class="mord mathnormal">ϵ</span><span class="mclose">})</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mclose">)</span></span></span></span>，其中P（S）表示S集合的幂集（子集）</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>s</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">s_0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>是唯一的开始状态</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mo>⊆</mo><mi>S</mi></mrow><annotation encoding="application/x-tex">F \subseteq S</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8193em;vertical-align:-0.136em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">F</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">⊆</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span></span></span></span> 表示接受状态集合</li>
+</ul>
+<p><strong>转换表</strong>：转换函数的一种表示方式，即将状态和输入符号对应列表</p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20220902090802414.png" alt="image-20220902090802414" style="zoom: 50%;" />
+<p>配合深度优先搜索和回溯算法，但是效率低且无法定位错误。这里的回溯是指到达最后的状态后串还没有结束，那么就并没有完成识别。</p>
+<p><strong>确定的有限自动机（DFA）</strong></p>
+<ul>
+<li>
+<p>-+转换函数 move : <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mo>×</mo><mo>∑</mo><mo>→</mo><mi>S</mi></mrow><annotation encoding="application/x-tex">S \times \sum\to S</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop op-symbol small-op" style="position:relative;top:0em;">∑</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span></span></span></span></p>
+<blockquote>
+<p>更快识别，空间占用大，复杂</p>
+</blockquote>
+</li>
+</ul>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20220902091338274.png" alt="image-20220902091338274" style="zoom: 50%;" />
+<p>这里的状态分别代表</p>
+<ul>
+<li>0：完全没办法达到最后，当只输入b的时候就是这个状态，如果不是依次输入的ab也是回到这个状态</li>
+<li>1：可能达到末尾，由于输入了一个a那么再输入一个b就结束了，如果不是a，或者到达最后的状态后没结束又输入了一个a那么回到这个状态</li>
+<li>2：结束状态，但<strong>允许回溯</strong></li>
+</ul>
+<p>例子：</p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20220902091922813.png" alt="image-20220902091922813" style="zoom: 50%;" />
+<p>这里的状态分别指的是<strong>余数</strong></p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cdn.jsdelivr.net/gh/A-624/blog_img/img/image-20220902092240875.png" alt="image-20220902092240875" style="zoom: 50%;" />
+<p>这里画出DFA之后根据它来进行正规式的书写：先写大的<strong>闭包</strong>（因为开始和结束都是0状态），选择到达其他状态or 自己转圈<strong>0</strong>，其他状态需要<strong>1…1</strong>，同理1状态。</p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20220902093009045.png" alt="image-20220902093009045" style="zoom:50%;" />
+<p>或者通过局部到整体逆推。</p>
+<p>举例：</p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20220907095345771.png" alt="image-20220907095345771" style="zoom: 50%;" />
+<p>举例：根据正规式画图</p>
+<p><code>（1|01)*0*</code>：前面半部分结尾是1，所有的组合是0101111011101等，类似于0不相邻的串，后面增加的000打破不相邻，但是没有001。故：不含001的01串</p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20220907100107875.png" alt="image-20220907100107875" style="zoom:50%;" />
+<p>举例：看准了结尾的字母组合就可以分类讨论了，这里的状态表示最后三位，或者小于位的串和后缀匹配。</p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20220907102416159.png" alt="image-20220907102416159" style="zoom:67%;" />
+<p><strong>NFA到DFA的变换</strong></p>
+<p><strong>子集</strong>构造法：DFA的一个状态是NFA的一个状态集合，并不是最简。</p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20221003214227806.png" alt="image-20221003214227806" style="zoom: 67%;" />
+<p>具体做法：首先找到包含开始状态和无条件转移的所有状态的集合，然后观察输入符号后形成的新的状态集合。</p>
+<p>DFA的<strong>化简</strong>：将俩集合输入不同符号都有相同结果的合并</p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20221003214531701.png" alt="image-20221003214531701" style="zoom: 67%;" />
+<p>死状态：当某个状态没有某个输入的转换，可以人为添加<strong>死状态</strong>后<strong>报错</strong>。</p>
+<p>可区别的状态：两个状态接收相同字符到达不同的状态</p>
+<h2 id="正规式到有限自动机">正规式到有限自动机</h2>
+<p>首先构造识别ε和字母表中一个符号的NFA，<strong>仅一个接受状态，它没有向外的转换</strong></p>
+<ul>
+<li>
+<p>选择：<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20220907104052380.png" alt="image-20220907104052380" style="zoom:50%;" /></p>
+</li>
+<li>
+<p>连接：<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20220907104126854.png" alt="image-20220907104126854" style="zoom:50%;" /></p>
+<ul>
+<li>状态减少</li>
+</ul>
+</li>
+<li>
+<p>闭包：<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20220907104219855.png" alt="image-20220907104219855" style="zoom:50%;" /></p>
+<ul>
+<li>增加状态俩</li>
+</ul>
+</li>
+</ul>
+<p>举例：</p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20221003215005955.png" alt="image-20221003215005955" style="zoom:67%;" />
+<p>构造特点</p>
+<ul>
+<li>状态数<strong>最多</strong>是符号和算符总数的<strong>两倍</strong></li>
+<li>只有<strong>一个接受</strong>状态，接受状态没有向外的转换</li>
+<li>每个状态有一个用Σ的符号标记的指向其它结点的转换，或者最多两个指向其它结点的ε转换</li>
+</ul>
+<p>举例：考虑任意字母出现次数都不超过1次的所有句子的集合，分析接受该语言的最简DFA有多少个状态</p>
+<p><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>26</mn></msup></mrow><annotation encoding="application/x-tex">2^{26}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">26</span></span></span></span></span></span></span></span></span></span></span></span></p>
+<p>举例：（考试题目）</p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20220907105644586.png" alt="image-20220907105644586" style="zoom:67%;" />
+<p>a) 由于是回文+嵌套的方式，我们分别定义两端是0，1，2 结尾的串</p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20221003215340375.png" alt="image-20221003215340375" style="zoom:67%;" />
+<p>b) 由于嵌套的特性，这里的DFA一定不是孤立的（不然不是最简），并且不能随意的往回走，（不然出现012121210的串），即一条路走到结束</p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20221003215707947.png" alt="image-20221003215707947" style="zoom:67%;" />
+<p>c）</p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20221003215813457.png" alt="image-20221003215813457" style="zoom:67%;" />
+<blockquote>
+<p>解释思路：增加一个数字3相当于在上面的基础上把原本的数字都加一（即开始状态从上往下接收3，2，1，0），其他的转移也是，然后在最下面多一个0开头的路子，这个路和原本的最长的那条路相比多2，故除去开始与结束的状态， (2+4+6+8+…)，每增加一个数字就增加前面最大项+2的。</p>
+</blockquote>
+<p>词法分析器的生成器（介绍）</p>
+<p>略</p>
+<h1 id="Chapter-3-语法分析">Chapter 3 语法分析</h1>
+<h2 id="流程图-2">流程图</h2>
 <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20220909075456915.png" alt="image-20220909075456915" style="zoom:67%;" />
-<h2 id="上下文无关文法：另一种表示语言的方法">上下文无关文法：另一种表示语言的方法</h2>
-<p>正规式表示：重复必须要指定的有限，或者无限。不能描述配对或嵌套</p>
-<p>上下文无关<strong>文法</strong>（文法）：比正规式更加强，一个四元组<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>（</mtext><msub><mi>V</mi><mi>T</mi></msub><mo separator="true">,</mo><msub><mi>V</mi><mi>N</mi></msub><mo separator="true">,</mo><mi>S</mi><mo separator="true">,</mo><mi>P</mi><mtext>）</mtext></mrow><annotation encoding="application/x-tex">（V_T , V_N , S, P）</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord cjk_fallback">（</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.2222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.2222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em;">N</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mord cjk_fallback">）</span></span></span></span></p>
 <ul>
-<li>
-<p><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>V</mi><mi>T</mi></msub></mrow><annotation encoding="application/x-tex">V_T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.2222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> : 终结符集合 (即和<strong>待分析的串</strong>即代码的具体内容)</p>
-<ul>
-<li>字母表前面的<strong>小写字母</strong>，如a, b, c, …</li>
-<li>词法分析中<strong>约定的记号</strong>，如id, num, if, while, …</li>
-<li><strong>数字</strong>0, 1, 2, … , 9</li>
-<li><strong>标点</strong>符号，如逗号，句号，…</li>
-<li><strong>运算</strong>符号，如+, -,  *, &lt;, &gt;, =, …</li>
+<li>一个程序看成一个句子判断给定的句子是否符合语法结构，比如程序是否属于c语言</li>
+<li>分析出该句子符合哪些结构，根据产生过程生成语法树。</li>
+<li>正规式和上下文无关文法都在描述一个语言，即<strong>句子满足的特性</strong>。</li>
 </ul>
-</li>
-<li>
-<p><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>V</mi><mi>N</mi></msub></mrow><annotation encoding="application/x-tex">V_N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.2222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em;">N</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>: 非终结符集合</p>
-<ul>
-<li>字母表前面的<strong>大写字母</strong>，如A, B, C, …</li>
-<li>字母<strong>S</strong>，通常代表开始符号</li>
-<li>小写字母组成的<strong>名字</strong>，如expr, op, stmt, …</li>
-</ul>
-</li>
-<li>
-<p>S : <strong>开始</strong>符号，非终结符中</p>
-</li>
-<li>
-<p>P : 产生式集合， 产生式形式 : A → α</p>
-</li>
-<li>
-<p>小写希腊字母，如α, β, γ, …，代表文法符号串</p>
-</li>
-</ul>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20220909082026035.png" alt="image-20220909082026035"></p>
-<p>文法本身是不包含 “|” “*”等运算符的，将上面的内容进行<strong>简化表示</strong>：</p>
-<ul>
-<li>利用 | 表示产生式中<strong>可推导的不同结果</strong>比如 expr → expr op expr | (expr) | - expr | id</li>
-<li><code>*</code>表示乘法</li>
-<li>利用 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⇒</mo></mrow><annotation encoding="application/x-tex">\Rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">⇒</span></span></span></span>* 表示零步或多步推导</li>
-<li>利用 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⇒</mo></mrow><annotation encoding="application/x-tex">\Rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">⇒</span></span></span></span>+表示一步或多步推导</li>
-</ul>
-<p><strong>推导</strong>：把<strong>产生式</strong>（P）看成<strong>重写（替代）规则</strong>，把符号串中的<strong>非终结符</strong>用其<strong>产生式</strong>右部的串（可能是终结or非终结符）来<strong>代替</strong></p>
-<ul>
-<li>最左推导：每一次都代换句型中最左边的非终结符</li>
-<li>最右推导（规范推导）</li>
-<li>分析树（本身不区分是最左还是最右推导出来的）</li>
-</ul>
-<p>范例：  E → E + E | E *E | (E ) | -E | id</p>
-<ul>
-<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mo>→</mo><mi>E</mi><mo>+</mo><mi>E</mi></mrow><annotation encoding="application/x-tex">E\to E+E</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span></span></span></span>表示两表达式相加仍然是表达式，允许使用右边的式子代替左边的式子。</li>
-<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mo>⇒</mo><mi>E</mi><mo>+</mo><mi>E</mi></mrow><annotation encoding="application/x-tex">E \Rightarrow E+E</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">⇒</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span></span></span></span> 表示“E推导出E+E”</li>
-<li>从<strong>开始符号</strong>使用产生式可以得到一个代换序列 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mo>⇒</mo><mi>E</mi><mo>+</mo><mi>E</mi><mo>⇒</mo><mi>i</mi><mi>d</mi><mo>+</mo><mi>E</mi><mo>⇒</mo><mi>i</mi><mi>d</mi><mo>+</mo><mi>i</mi><mi>d</mi></mrow><annotation encoding="application/x-tex">E\Rightarrow E+E\Rightarrow id+E\Rightarrow id+id</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">⇒</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">⇒</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">i</span><span class="mord mathnormal">d</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">⇒</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">i</span><span class="mord mathnormal">d</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">i</span><span class="mord mathnormal">d</span></span></span></span>，表明了最后的<strong>结果</strong>是表达式的<strong>实例</strong>，所有项都是语法中的句型</li>
-</ul>
-<p>二义性：未规定顺序，另外根据替换的顺序可以写成树</p>
-<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20220909084941697.png" alt="image-20220909084941697" style="zoom:67%;" />
+<p><strong>举例</strong></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//tinyc</span></span><br><span class="line">a = value + sum(<span class="number">5</span>, <span class="number">123</span>);</span><br><span class="line"><span class="comment">//token流</span></span><br><span class="line">ID&lt;a&gt; <span class="string">&#x27;=&#x27;</span> ID&lt;value&gt; <span class="string">&#x27;+&#x27;</span> ID&lt;sum&gt; <span class="string">&#x27;(&#x27;</span> NUM&lt;<span class="number">5</span>&gt; <span class="string">&#x27;,&#x27;</span> NUM&lt;<span class="number">123</span>&gt; <span class="string">&#x27;)&#x27;</span> <span class="string">&#x27;;&#x27;</span></span><br><span class="line">Expr ==&gt; Expr + Expr ==&gt; number + Expr ==&gt; number + number ==&gt; <span class="number">12</span> + <span class="number">53</span></span><br></pre></td></tr></table></figure>
+<h2 id="上下文无关文法">上下文无关文法</h2>
+<p><strong>四元组</strong>：<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>（</mtext><msub><mi>V</mi><mi>T</mi></msub><mo separator="true">,</mo><msub><mi>V</mi><mi>N</mi></msub><mo separator="true">,</mo><mi>S</mi><mo separator="true">,</mo><mi>P</mi><mtext>）</mtext><mo>=</mo><mtext>（终结符，非终结符，起始符号，产生式）</mtext></mrow><annotation encoding="application/x-tex">（V_T , V_N , S, P）=（终结符，非终结符，起始符号，产生式）</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord cjk_fallback">（</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.2222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.2222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em;">N</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mord cjk_fallback">）</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord cjk_fallback">（终结符，非终结符，起始符号，产生式）</span></span></span></span>。</p>
+<details class="folding-tag" ><summary> 正规定义和上下文无关文法 </summary>
+              <div class='content'>
+              <p>正规式：要么有限重复指定，要么无限，对于配对和嵌套没法描述。</p><blockquote><p>相比于正规定义语言，上下文无关文法其实更直观一点，这是一种递归定义语言。举例定义语言x（产生式）：句子（<strong>起始</strong>）有主谓宾，宾语也可以有主谓宾，主语和宾语可以是你我他和兔子，动作可以是喜欢或者相信。</p><p>则 “我相信你” “我喜欢你” “我相信你喜欢兔子” “我喜欢兔子”等句子都是语言x中合法的。</p></blockquote>
+              </div>
+            </details>
+<p><strong>概念解释</strong></p>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>约定记号</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>V</mi><mi>T</mi></msub></mrow><annotation encoding="application/x-tex">V_T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.2222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>：终结符集合</td>
+<td>a、num、+、0、逗号等</td>
+<td>无法再产生新的符号</td>
+</tr>
+<tr>
+<td><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>V</mi><mi>N</mi></msub></mrow><annotation encoding="application/x-tex">V_N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.2222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em;">N</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>：非终结符集合</td>
+<td>A, B, C，</td>
+<td>可以继续扩展或产生的符号</td>
+</tr>
+<tr>
+<td>S：开始符号S</td>
+<td></td>
+<td><strong>开始</strong>符号，非终结符</td>
+</tr>
+<tr>
+<td>P： 产生式集合</td>
+<td>A → α</td>
+<td>简便起见，`A → α</td>
+</tr>
+<tr>
+<td>文法符号串</td>
+<td>小写希腊字母，如α, β, γ, …</td>
+<td>只有终结符的符号串称为 <strong>句子</strong>，空串也属于</td>
+</tr>
+<tr>
+<td>展开和折叠</td>
+<td>使用产生式替换左侧或者右侧得到新的串</td>
+<td></td>
+</tr>
+<tr>
+<td>推导</td>
+<td>从一个符号串 u 开始，应用一系列的产生式，展开到另一个的符号串 v。未规定顺序可能有二义性。</td>
+<td>最左推导：展开时每次都代换句型中最左边的非终结符<br />最右推导（规范推导）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⇒</mo></mrow><annotation encoding="application/x-tex">\Rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">⇒</span></span></span></span>* 表示零步或多步推导</p>
+<p><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⇒</mo></mrow><annotation encoding="application/x-tex">\Rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">⇒</span></span></span></span>+表示一步或多步推导</p>
+<p>二义性主要是优先级出问题</p>
+<p>上下文无关指的是产生式固定（无条件），上下文有关比如当且仅当前一个串为u时替换某某</p>
+</blockquote>
 <h2 id="语言和文法">语言和文法</h2>
 <p>文法的<strong>优点</strong></p>
 <ul>
@@ -332,73 +662,82 @@ b e g i n： 5个字母键， 5个回退键， 5个下划线键</p>
 <blockquote>
 <p>例子<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20220918222316584.png" alt="image-20220918222316584" style="zoom:67%;" /></p>
 </blockquote>
-<h2 id="自上而下分析">自上而下分析</h2>
-<p>自上而下分析：由简到繁，通过输入串的提示，将开始符号进行<strong>扩充</strong>。为输入串寻找<strong>最左推导</strong>。</p>
-<p>一般使用<strong>回溯</strong>来处理错误（可能前面有暂时的成功，故回溯复杂），语义分析重开，没有<strong>确切报错</strong>，效率低，不能处理<strong>左递归</strong></p>
-<blockquote>
-<p>不能处理左递归：比如下面进行最左推导（替换）的时候，一直替换下去</p>
-<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20220918222516027.png" alt="image-20220918222516027" style="zoom: 50%;" />
-</blockquote>
-<h3 id="LL-1-文法：通过栈构造不回溯的分析">LL(1)文法：通过栈构造不回溯的分析</h3>
-<blockquote>
-<p><strong>避免回溯</strong>：匹配成功（暂时）即正确，或者要么就无法匹配成功</p>
+<h2 id="自上而下分析：展开">自上而下分析：展开</h2>
 <ul>
-<li>第一个L代表从左向右扫描输入符号串；</li>
-<li>第二个L代表产生<strong>最左</strong>推导；</li>
-<li>(1)代表在分析过程中执行每一步推导都要<strong>向前查看一个输入符号</strong>——当前正在处理的输入符号</li>
+<li>根据句子从开始符号进行<strong>展开</strong>。为输入串寻找<strong>最左推导</strong>。</li>
+<li>回溯处理错误，语义分析重开，没有<strong>确切报错</strong>，效率低</li>
+<li>不能处理<strong>左递归</strong> A -&gt; A u，因为是使用最左替换，即使句子正确也会陷入死循环</li>
 </ul>
+<blockquote>
+<p>所有产生式<strong>都不可用</strong>，则出现错误，可能前面也是错的故需要回溯。有多个产生式可以用也需要回溯，在节点试探一个替换，到不了就回到节点，如果多个产生式<strong>都可用</strong>推导则有歧义。</p>
 </blockquote>
-<p><strong>定义</strong>函数（非终结符-&gt;终结符）：</p>
+<h3 id="LL-1-文法">LL(1)文法</h3>
+<div class="note info flat"><p>仅<strong>适用于</strong>，要么有唯一的产生式匹配成功，要么句子不属于语言的文法定义，避免回溯</p>
+</div>
 <ul>
 <li>
-<p><strong>FIRST</strong>(α) = {a | α <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\to</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span> *a…, a∈VT}特别当 α <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\to</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span>ε 时，规定 ε ∈ FIRST(α)  即零步或多步推导到目标的集合。如果函数自变量是很多的串，则考虑推到的串的第一个字符。</p>
+<p>每次从左向右<strong>比较中间句子和最终句子</strong>，找到第一个不匹配的符号x和最终句子中对应位置a</p>
+<blockquote>
+<p>事实上只需要从前面确认过的符号之后开始匹配即可，后面介绍match方法</p>
+<p>两个L表示从左到右扫描和最左推导，1表示每次都要查看一个输入符号</p>
+</blockquote>
 </li>
 <li>
-<p><strong>FOLLOW</strong>(A) = {a | S <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\to</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span>* …Aa…， a∈VT}如果A是某个句型的最右符号，那么$属于FOLLOW(A)  ，即开始符号推导出的在非终结符A后面的所有终结符</p>
+<p>如果x 为终结符，不合语法</p>
+</li>
+<li>
+<p>反之观察<strong>a是否可以由x在左侧的产生式</strong>推得：First集合的计算</p>
+</li>
+<li>
+<p>如果有唯一的x-&gt;u使得u第一个字符或者u推导出的第一个字符为a，将对应的产生式展开</p>
+</li>
+<li>
+<p>如果有多个u即二义性，不适用于LL（1）文法</p>
 </li>
 </ul>
-<p>计算规则：</p>
+<p><strong>关于match</strong></p>
+<p>将已经匹配的符号去掉</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"> <span class="comment">//一个辅助过程，当前记号是非/终结符t，则自动读取下一个符号，反之报错</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">match</span> <span class="params">(terminal t)</span> &#123;</span><br><span class="line"><span class="keyword">if</span> (lookahead == t) lookahead = nextToken( );</span><br><span class="line"><span class="keyword">else</span> error( );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>概念介绍</strong></p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>补充</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>FIRST</strong>(α) = {a `</td>
+<td>` α <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\to</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span> *a…, a∈VT}</td>
+</tr>
+<tr>
+<td><strong>FOLLOW</strong>(A) = {a `</td>
+<td>` S <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\to</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span>* …Aa…， a∈VT}</td>
+</tr>
+</tbody>
+</table>
+<p><strong>计算规则</strong></p>
 <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20220916081705601.png" alt="image-20220916081705601" style="zoom: 50%;" />
+<p><strong>适用文法</strong></p>
+<p>LL（1）<strong>文法分析</strong>：对于任意的 A → α | β</p>
 <ul>
-<li>
-<p>第二个 B的开始符号一定是A的开始符号的子集，因为B能推导的首字符，A一定能推导，但是反之不一定。</p>
-</li>
-<li>
-<p>第二个 B如果可以推导到空串，则后面的α 开始符号也是A的子集</p>
-</li>
-<li>
-<p>最后一个</p>
+<li><strong>不能有公共左因子</strong>：<strong>FIRST(α) ∩ FIRST(β) = Ø</strong> ，可使用<strong>左因子提取</strong>的方法做到这一点</li>
+<li><strong>元素可以推导到空串</strong>：如果存在某个非终结符能推导到 ε ， β $\implies $* ε，需要保证至少有一个 <strong>FIRST(α) ∩ FOLLOW(A) = Ø</strong>   。不然选择β的推导和选择α的</li>
+</ul>
+<div class="note primary flat"><p>即：对于非终结符的所有展开，开始符号（first）都不一样，且当某个推导可能为空时，A之后的元素不能是first（α）</p>
+</div>
+<p><strong>特点</strong></p>
 <ul>
-<li>
-<p>β的开始符号，一定是A的后继。</p>
-</li>
-<li>
-<p>后面对于$\beta $推导到空串，那么B的后继一定是A的后继，A可以推导出别的后继。</p>
-</li>
+<li>无公共左因子：选择唯一</li>
+<li>不是二义的：选择唯一</li>
+<li>不含左递归 ：最左推导</li>
 </ul>
-</li>
-</ul>
-<p>例子：</p>
-<blockquote>
-<p>开始集合需要找到推导的结果以及空串，比如E推导的结构和T的开始集合相同，和F的开始集合也相同，根据最后一行得到，进而其他的开始集合类似</p>
-<p>后继集合需要知道所有推导中非终结符后面的符号，比如E的后继一定是<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mo mathvariant="normal">′</mo><mtext>的后继（因为</mtext><mi>E</mi><mtext>的后继</mtext><mi>a</mi><mtext>，在</mtext><mi>E</mi><mtext>变成</mtext><mi>E</mi><mo mathvariant="normal">′</mo><mtext>后会变成</mtext><mi>E</mi><mo mathvariant="normal">′</mo><mtext>的后继）</mtext></mrow><annotation encoding="application/x-tex">E\prime的后继（因为E的后继a，在E变成E\prime 后会变成E\prime 的后继）</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="mord">′</span><span class="mord cjk_fallback">的后继（因为</span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="mord cjk_fallback">的后继</span><span class="mord mathnormal">a</span><span class="mord cjk_fallback">，在</span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="mord cjk_fallback">变成</span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="mord">′</span><span class="mord cjk_fallback">后会变成</span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="mord">′</span><span class="mord cjk_fallback">的后继）</span></span></span></span>，F的</p>
-</blockquote>
-<p>LL（1）<strong>文法分析</strong>：对于任意的 A → α | β | γ，（即<strong>每个产生式</strong>的分支都可以进行唯一可逆推的选择）对于输入a，有且仅有一种 first（α）= a 。</p>
-<ul>
-<li>所有的first 集合都没有空串，则只需 所有的开始集合不相交即可：<strong>FIRST(α) ∩ FIRST(β) = Ø</strong> ，可使用左因子提取的方法做到这一点</li>
-<li>如果存在某个非终结符能推导到 ε ， β $\implies $* ε，则即使满足上面的条件仍然有理由选择β，故观察下一个元素，也就是A的后继，那么需要保证 <strong>FIRST(α) ∩ FOLLOW(A) = Ø</strong></li>
-</ul>
-<blockquote>
-<p>对于产生式中多个选择，所有<strong>选择的开始符号</strong>都不相同，并且也不和产生式<strong>左侧</strong>符号的<strong>后继</strong>相同。</p>
-</blockquote>
-<p>性质: 无公共左因子；不是二义的；不含左递归   。</p>
-<p>对于文法中满足上面这两条的，可以称为LL（1）文法，我们也可以构建出非递归的算法进行输入串的分析（构造分析树）。</p>
 <h3 id="递归下降的预测分析">**递归下降的预测分析  **</h3>
 <p>预测分析：对当前的非终结符，决定采用的选择。</p>
 <p><strong>过程</strong>：输入串是待分析源程序，假设lookahead 第一个终结符 a，调用S （开始符号）的分析程序，这个程序会首先分析输入的符号是自己产生式的哪个选择，即对于产生式  S → α | β | γ，而言，a属于哪一个First集合，假设是α，则进行α的验证，跳转到我们为这个非终结符写的验证函数（对于每一个非终结符都要写一个分析过程）。然后递归调用需要的程序。</p>
 <p>举例:</p>
 <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20221004110656289.png" alt="image-20221004110656289" style="zoom:67%;" />
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"> <span class="comment">//一个辅助过程，当前记号是非/终结符t，则自动读取下一个符号，反之报错</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">match</span> <span class="params">(terminal t)</span> &#123;</span><br><span class="line"><span class="keyword">if</span> (lookahead == t) lookahead = nextToken( );</span><br><span class="line"><span class="keyword">else</span> error( );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>对于非终结符type （开始符号）：</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">type</span><span class="params">( )</span> &#123;</span><br><span class="line"><span class="keyword">if</span> ( (lookahead == integer) || (lookahead == <span class="type">char</span>) ||(lookahead == num) )</span><br><span class="line"> simple( ); <span class="comment">//对于simple的first集合这里进行一个选择</span></span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> ( lookahead == <span class="string">&#x27;↑&#x27;</span> ) &#123; match( <span class="string">&#x27;↑&#x27;</span> ); match(id);&#125;<span class="comment">//下面的都是对终结符的处理</span></span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (lookahead == <span class="built_in">array</span>) &#123;</span><br><span class="line">match(<span class="built_in">array</span>); match( <span class="string">&#x27;[&#x27;</span> ); simple( );</span><br><span class="line">match( <span class="string">&#x27;]&#x27;</span> ); match(of ); type( );<span class="comment">//递归的体现，主要是文法递归</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> error( );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <blockquote>
@@ -1332,7 +1671,687 @@ F → ( E ) | id</p>
 </ul>
 </blockquote>
 <p><strong>程序块</strong>：类似于函数的大括号（本身有局部变量声明），允许嵌套，**按照最接近的作用域规则（变量）**即局部优先级大于整体，并列的程序块并不会同时活跃，变量可重叠分配（并列非嵌套，一定是一个结束另外一个开始，使用同一块内存就可以，不会重叠）</p>
-</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://a-624.github.io">A-624</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://a-624.github.io/post/1001.html">https://a-624.github.io/post/1001.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://a-624.github.io" target="_blank">Ann の 小窝</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a></div><div class="post_share"><div class="social-share" data-image="https://w.wallhaven.cc/full/gp/wallhaven-gpzve7.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/post/26403.html"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://s2.loli.net/2022/10/01/p6CQoLxsIWcu5zq.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">hexo 建站记录</div></div></a></div><div class="next-post pull-right"><a href="/post/1563.html"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://s2.loli.net/2022/10/01/p6CQoLxsIWcu5zq.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">md公式输入语法</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Chapter-3-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90"><span class="toc-number">1.</span> <span class="toc-text">Chapter 3 语法分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8A%E4%B8%8B%E6%96%87%E6%97%A0%E5%85%B3%E6%96%87%E6%B3%95%EF%BC%9A%E5%8F%A6%E4%B8%80%E7%A7%8D%E8%A1%A8%E7%A4%BA%E8%AF%AD%E8%A8%80%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">1.1.</span> <span class="toc-text">上下文无关文法：另一种表示语言的方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E8%A8%80%E5%92%8C%E6%96%87%E6%B3%95"><span class="toc-number">1.2.</span> <span class="toc-text">语言和文法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A3%E8%A7%84%E5%BC%8F%E5%92%8C%E4%B8%8A%E4%B8%8B%E6%96%87%E6%97%A0%E5%85%B3%E6%96%87%E6%B3%95%E7%9A%84%E6%AF%94%E8%BE%83"><span class="toc-number">1.2.1.</span> <span class="toc-text">正规式和上下文无关文法的比较</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81%E6%96%87%E6%B3%95%E4%BA%A7%E7%94%9F%E7%9A%84%E8%AF%AD%E8%A8%80%EF%BC%9A"><span class="toc-number">1.2.2.</span> <span class="toc-text">验证文法产生的语言：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%82%E5%BD%93%E7%9A%84%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%96%87%E6%B3%95"><span class="toc-number">1.2.3.</span> <span class="toc-text">适当的表达式文法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B6%88%E9%99%A4%E4%BA%8C%E4%B9%89%E6%80%A7"><span class="toc-number">1.2.4.</span> <span class="toc-text">消除二义性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B6%88%E9%99%A4%E5%B7%A6%E9%80%92%E5%BD%92%EF%BC%9A"><span class="toc-number">1.2.5.</span> <span class="toc-text">消除左递归：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E5%B7%A6%E5%9B%A0%E5%AD%90"><span class="toc-number">1.2.6.</span> <span class="toc-text">提左因子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%9E%E4%B8%8A%E4%B8%8B%E6%96%87%E6%97%A0%E5%85%B3%E7%9A%84%E8%AF%AD%E8%A8%80%E6%9E%84%E9%80%A0%EF%BC%9A"><span class="toc-number">1.2.7.</span> <span class="toc-text">非上下文无关的语言构造：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E4%B8%8A%E8%80%8C%E4%B8%8B%E5%88%86%E6%9E%90"><span class="toc-number">1.3.</span> <span class="toc-text">自上而下分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#LL-1-%E6%96%87%E6%B3%95%EF%BC%9A%E9%80%9A%E8%BF%87%E6%A0%88%E6%9E%84%E9%80%A0%E4%B8%8D%E5%9B%9E%E6%BA%AF%E7%9A%84%E5%88%86%E6%9E%90"><span class="toc-number">1.3.1.</span> <span class="toc-text">LL(1)文法：通过栈构造不回溯的分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%92%E5%BD%92%E4%B8%8B%E9%99%8D%E7%9A%84%E9%A2%84%E6%B5%8B%E5%88%86%E6%9E%90"><span class="toc-number">1.3.2.</span> <span class="toc-text">**递归下降的预测分析  **</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%9E%E9%80%92%E5%BD%92%E7%9A%84%E9%A2%84%E6%B5%8B%E5%88%86%E6%9E%90%EF%BC%9A"><span class="toc-number">1.3.3.</span> <span class="toc-text">非递归的预测分析：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E9%A2%84%E6%B5%8B%E5%88%86%E6%9E%90%E8%A1%A8-M"><span class="toc-number">1.3.4.</span> <span class="toc-text">构造预测分析表 M</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%84%E6%B5%8B%E5%88%86%E6%9E%90%E7%9A%84%E9%94%99%E8%AF%AF%E6%81%A2%E5%A4%8D"><span class="toc-number">1.3.5.</span> <span class="toc-text">预测分析的错误恢复</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E4%B8%8B%E8%80%8C%E4%B8%8A%E5%88%86%E6%9E%90"><span class="toc-number">1.4.</span> <span class="toc-text">自下而上分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BD%92%E7%BA%A6%EF%BC%9A"><span class="toc-number">1.4.1.</span> <span class="toc-text">归约：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A7%BB%E8%BF%9B%E5%92%8C%E5%BD%92%E7%BA%A6%E7%9A%84%E5%86%B2%E7%AA%81"><span class="toc-number">1.4.1.1.</span> <span class="toc-text">移进和归约的冲突</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LR%E5%88%86%E6%9E%90%E5%99%A8"><span class="toc-number">1.5.</span> <span class="toc-text">LR分析器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%84%E9%80%A0SLR%E5%88%86%E6%9E%90%E8%A1%A8"><span class="toc-number">1.6.</span> <span class="toc-text">构造SLR分析表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8E%E6%96%87%E6%B3%95%E6%9E%84%E9%80%A0%E8%AF%86%E5%88%AB%E6%B4%BB%E5%89%8D%E7%BC%80%E7%9A%84DFA"><span class="toc-number">1.6.1.</span> <span class="toc-text">从文法构造识别活前缀的DFA</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BD%AC%E7%A7%BB%E5%87%BD%E6%95%B0-goto-I-X"><span class="toc-number">1.6.1.1.</span> <span class="toc-text">转移函数 goto(I, X)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8E%E8%AF%86%E5%88%AB%E6%B4%BB%E5%89%8D%E7%BC%80%E7%9A%84DFA%E6%9E%84%E9%80%A0SLR%E5%88%86%E6%9E%90%E8%A1%A8"><span class="toc-number">1.6.2.</span> <span class="toc-text">从识别活前缀的DFA构造SLR分析表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E6%99%AE%E9%81%8D%E6%84%8F%E4%B9%89%E4%B8%8A%E7%9A%84LR%E5%88%86%E6%9E%90%E7%A8%8B%E5%BA%8F"><span class="toc-number">1.6.3.</span> <span class="toc-text">一个普遍意义上的LR分析程序</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E8%A7%84%E8%8C%83%E7%9A%84LR%E5%88%86%E6%9E%90%E8%A1%A8"><span class="toc-number">1.7.</span> <span class="toc-text">构造规范的LR分析表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%84%E9%80%A0LALR%E5%88%86%E6%9E%90%E8%A1%A8"><span class="toc-number">1.8.</span> <span class="toc-text">构造LALR分析表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A4%E6%96%AD%E6%96%87%E6%B3%95"><span class="toc-number">1.9.</span> <span class="toc-text">判断文法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Chapter-4%E8%AF%AD%E6%B3%95%E5%88%B6%E5%AF%BC%E7%9A%84%E7%BF%BB%E8%AF%91"><span class="toc-number">2.</span> <span class="toc-text">Chapter 4语法制导的翻译</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95%E5%88%B6%E5%AF%BC%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-number">2.1.</span> <span class="toc-text">语法制导的定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CFG%E7%AC%A6%E5%8F%B7%E7%BB%91%E5%AE%9A%E5%B1%9E%E6%80%A7"><span class="toc-number">2.2.</span> <span class="toc-text">CFG符号绑定属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#S-%E5%B1%9E%E6%80%A7%E5%AE%9A%E4%B9%89%E7%9A%84%E8%87%AA%E4%B8%8B%E8%80%8C%E4%B8%8A%E8%AE%A1%E7%AE%97"><span class="toc-number">2.3.</span> <span class="toc-text">S 属性定义的自下而上计算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%E7%9A%84%E5%90%8C%E6%97%B6%E8%BF%9B%E8%A1%8C%E7%BB%BC%E5%90%88%E5%B1%9E%E6%80%A7%E7%9A%84%E8%AE%A1%E7%AE%97"><span class="toc-number">2.3.1.</span> <span class="toc-text">语法分析的同时进行综合属性的计算</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#L%E5%B1%9E%E6%80%A7%E5%AE%9A%E4%B9%89%E7%9A%84%E8%87%AA%E4%B8%8A%E8%80%8C%E4%B8%8B%E8%AE%A1%E7%AE%97"><span class="toc-number">2.4.</span> <span class="toc-text">L属性定义的自上而下计算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#L%E5%B1%9E%E6%80%A7%E5%AE%9A%E4%B9%89"><span class="toc-number">2.4.1.</span> <span class="toc-text">L属性定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BF%BB%E8%AF%91%E6%96%B9%E6%A1%88%EF%BC%9A%E7%BB%91%E5%AE%9A%E8%AF%AD%E4%B9%89%E5%8A%A8%E4%BD%9C%E4%B8%8E%E4%BA%A7%E7%94%9F%E5%BC%8F"><span class="toc-number">2.4.2.</span> <span class="toc-text">翻译方案：绑定语义动作与产生式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%84%E6%B5%8B%E7%BF%BB%E8%AF%91%E5%99%A8%E7%9A%84%E8%AE%BE%E8%AE%A1"><span class="toc-number">2.5.</span> <span class="toc-text">预测翻译器的设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#S%E5%B1%9E%E6%80%A7%E5%AE%9A%E4%B9%89%E7%9A%84%E9%80%92%E5%BD%92%E4%B8%8B%E9%99%8D%E9%A2%84%E6%B5%8B%E5%88%86%E6%9E%90%E5%AE%9E%E7%8E%B0%EF%BC%9A%E8%AE%A1%E7%AE%97%E9%83%BD%E5%9C%A8%E4%BA%A7%E7%94%9F%E5%BC%8F%E7%9A%84%E5%8F%B3%E7%AB%AF"><span class="toc-number">2.5.1.</span> <span class="toc-text">S属性定义的递归下降预测分析实现：计算都在产生式的右端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#L%E5%B1%9E%E6%80%A7%E5%AE%9A%E4%B9%89%E7%9A%84%E9%80%92%E5%BD%92%E4%B8%8B%E9%99%8D%E9%A2%84%E6%B5%8B%E5%88%86%E6%9E%90%E5%AE%9E%E7%8E%B0"><span class="toc-number">2.5.2.</span> <span class="toc-text">L属性定义的递归下降预测分析实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#L%E5%B1%9E%E6%80%A7%E5%AE%9A%E4%B9%89%E7%9A%84%E8%87%AA%E4%B8%8B%E8%80%8C%E4%B8%8A%E8%AE%A1%E7%AE%97"><span class="toc-number">2.6.</span> <span class="toc-text">L属性定义的自下而上计算</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Chapter-5-%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5"><span class="toc-number">3.</span> <span class="toc-text">Chapter 5 类型检查</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="toc-number">3.1.</span> <span class="toc-text">编程语言中的类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E5%8C%96%E8%AF%AD%E8%A8%80%E5%92%8C%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F"><span class="toc-number">3.1.1.</span> <span class="toc-text">类型化语言和类型系统</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F"><span class="toc-number">3.2.</span> <span class="toc-text">类型系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5"><span class="toc-number">3.3.</span> <span class="toc-text">类型检查</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5%E5%99%A8"><span class="toc-number">3.3.1.</span> <span class="toc-text">类型检查器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E7%9A%84%E6%A3%80%E6%9F%A5"><span class="toc-number">3.3.2.</span> <span class="toc-text">类型转换的检查</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E6%80%81%E5%87%BD%E6%95%B0"><span class="toc-number">3.4.</span> <span class="toc-text">多态函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E6%80%81%E8%AF%AD%E8%A8%80%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5"><span class="toc-number">3.4.1.</span> <span class="toc-text">多态语言类型检查</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E7%AD%89%E4%BB%B7"><span class="toc-number">3.5.</span> <span class="toc-text">类型表达式的等价</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E7%AD%89%E4%BB%B7"><span class="toc-number">3.5.1.</span> <span class="toc-text">结构等价</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8D%E5%AD%97%E7%AD%89%E4%BB%B7"><span class="toc-number">3.5.2.</span> <span class="toc-text">名字等价</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%92%8C%E7%AE%97%E7%AC%A6%E7%9A%84%E9%87%8D%E8%BD%BD"><span class="toc-number">3.6.</span> <span class="toc-text">函数和算符的重载</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E5%85%AD%E7%AB%A0-%E8%BF%90%E8%A1%8C%E6%97%B6%E5%AD%98%E5%82%A8%E7%A9%BA%E9%97%B4%E7%9A%84%E7%BB%84%E7%BB%87%E5%92%8C%E7%AE%A1%E7%90%86"><span class="toc-number">4.</span> <span class="toc-text">第六章 运行时存储空间的组织和管理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%A7%88"><span class="toc-number">4.1.</span> <span class="toc-text">概览</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B1%80%E9%83%A8%E5%AD%98%E5%82%A8%E5%88%86%E9%85%8D-%EF%BC%9A%E7%B1%BB%E4%BC%BC%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8"><span class="toc-number">4.2.</span> <span class="toc-text">局部存储分配  ：类似函数调用</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By A-624</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="algolia-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="search-wrap"><div id="algolia-search-input"></div><hr/><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-info"><div class="algolia-stats"></div><div class="algolia-poweredBy"></div></div></div></div></div><div id="search-mask"></div></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="fa-solid fa-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="fa-solid fa-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="fa-solid fa-arrow-rotate-right"></i></div><div class="rightMenu-item" id="menu-home"><i class="fa-solid fa-house"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" href="/categories/"><i class="fa-solid fa-folder-open"></i><span>文章分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="fa-solid fa-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuNormal"><div class="rightMenu-item" id="menu-translate"><i class="fa-solid fa-earth-asia"></i><span>繁简切换</span></div><div class="rightMenu-item" id="menu-darkmode"><i class="fa-solid fa-moon"></i><span>切换模式</span></div><div class="rightMenu-item" id="menu-print"><i class="fa-solid fa-print fa-fw"></i><span>打印页面</span></div></div></div><div id="rightmenu-mask"></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/algoliasearch/dist/algoliasearch-lite.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instantsearch.js/dist/instantsearch.production.min.js"></script><script src="/js/search/algolia.js"></script><script async="async">var preloader = {
+<details class="folding-tag" ><summary> 例子 </summary>
+              <div class='content'>
+              <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20221107020026267.png" alt="image-20221107020026267" style="zoom:67%;" /><ul><li>这里的重叠分配存储单元是指，在不同作用域中，我们把名字a绑定到存储空间不同，且由于a的作用域是从开始到结束，除了中间的局部定义，故需要俩位置分别绑定a，在赋值（状态）的时候分别赋值。而中间俩变量是并列的程序块，可以重叠分配位置如最后一行。</li></ul>
+              </div>
+            </details>
+<h2 id="全局栈式存储分配">全局栈式存储分配</h2>
+<div class="note info flat"><p>介绍<strong>运行程序</strong>的活动记录在<strong>存储空间的分配策略</strong>&amp;&amp;<strong>目标代码</strong>怎样<strong>访问</strong>绑定到<strong>局部名字</strong>的存储单元</p>
+</div>
+<h3 id="分配策略"><strong>分配策略</strong></h3>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>描述</th>
+<th>补充</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>静态分配策略</td>
+<td><strong>编译</strong>时对所有数据对象分配固定的存储单元，且在运行时始终保持不变</td>
+<td></td>
+</tr>
+<tr>
+<td>栈式存储分配</td>
+<td><strong>运行</strong>时把<strong>存储器作为一个栈</strong>进行管理，每当调用一个过程，它所需的存储空间就<strong>动态地分配于栈顶</strong>，一旦退出，它所占空间就予以释放</td>
+<td></td>
+</tr>
+<tr>
+<td>堆式分配策略</td>
+<td><strong>运行</strong>时把<strong>存储器组织为堆</strong>，允许用户动态<strong>申请</strong>和归还存储空间，凡申请者从堆中分给一块，凡释放者退回给堆</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>影响分配策略的有，过程是否递归，局部变量的作用域，是否能够访问非局部变量，参数的传递方式，过程是否能够作为参数或者返回值（比如函数指针？）以及内存的动态分配和释放等，后面会有提及</p>
+</blockquote>
+<h3 id="内存划分"><strong>内存划分</strong></h3>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20221102095551302.png" alt="image-20221102095551302" style="zoom:67%;" />
+<p><strong>静态分配</strong>：编译时绑定到存储单元， 与运行时无关，生存期是程序的整个运行期间 。</p>
+<ul>
+<li><strong>递归不被允许</strong>，因为回溯的时候，变量a对应的存储空间数值又不能撤回到之前的数</li>
+<li>数据对象的长度和位置限制需要在编译的时候就知道，不能动态建立结构，比如<strong>数组范围</strong>不能是一个表达式</li>
+</ul>
+<div class="note info flat"><p>外部和内部针对的是函数，并不是文件</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>说明</th>
+<th>静态分配？</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>自动变量（局部变量）</td>
+<td>函数中声明的变量，结束后释放</td>
+<td>不可，涉及释放</td>
+</tr>
+<tr>
+<td>静态局部变量</td>
+<td>函数中声明，后续仅在函数中有效，但是仅赋一次初值，并不释放</td>
+<td>可</td>
+</tr>
+<tr>
+<td>外部变量</td>
+<td>函数外声明，不同文件使用extern可以调用</td>
+<td>可</td>
+</tr>
+<tr>
+<td>静态外部变量</td>
+<td>函数外声明，不同文件不能调用以防止重名，限制的是作用域，仍然是全局的</td>
+<td>可</td>
+</tr>
+</tbody>
+</table>
+<h3 id="汇编与变量"><strong>汇编与变量</strong></h3>
+<p>四个变量分别代表四个类型：</p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20221107022401017.png" alt="image-20221107022401017" style="zoom:67%;" />
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20221107022416498.png" alt="image-20221107022416498" style="zoom:80%;" />
+<ul>
+<li><code>.align 4</code>表示对齐</li>
+<li><code>.type aa ,@ object   .size aa 4</code>aa类型的是个变量的对象，对应长度是4个字节</li>
+<li><code>aa:  .long 10</code>  赋值，aa：即标号，函数引用得到10</li>
+<li><strong>全局变量</strong><code>.globl bb</code> 即不同文件在工程里可以全局应用（非静态）</li>
+<li><strong>静态局部变量</strong>区分不同的名字，用加小数点的方式比如 <code>cc.2</code>，其他文件如果使用cc作为名字可以加不同小数点后的数字</li>
+<li><code>ebp</code>是基准地址的寄存器，这里的基地址是寄存器，<strong>栈由高到低</strong>，故这里就是-2字节（short），注意，这里的局部变量就是在运行的时候才会进行分配，也就是不能静态分配的dd，我们<strong>此时基地址在局部变量的和临时数据的开始字段</strong>。</li>
+<li>函数先后的省略部分是寄存器的保护和恢复</li>
+</ul>
+<blockquote>
+<p>汇编语言中变量的类型是不会标识的，主要看我们调用什么汇编函数</p>
+</blockquote>
+<h3 id="活动树和运行栈"><strong>活动树和运行栈</strong></h3>
+<ul>
+<li>可以联想一下递归，每次我们实现的是一个过程，使用栈可以实现整个顺序的控制，即<strong>控制栈</strong></li>
+<li>运行栈：将之前栈里的过程换成活动记录</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>解释</th>
+<th>补充</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>活动树</strong></td>
+<td>用<strong>树</strong>来描绘<strong>控制进入和离开活动</strong>的方式</td>
+<td>就是函数的执行顺序，嵌套调用或递归等</td>
+</tr>
+<tr>
+<td>控制栈</td>
+<td>当前活跃着的过程活动可以保存在一个栈</td>
+<td>用栈表示函数的执行顺序</td>
+</tr>
+<tr>
+<td><strong>运行栈</strong></td>
+<td>把控制栈中的信息拓广到包括过程活动所需的所有局部信息</td>
+<td>栈里面放的是<strong>活动记录表</strong></td>
+</tr>
+<tr>
+<td><strong>调用序列</strong></td>
+<td>保证调用前后的数据保存和恢复等</td>
+<td></td>
+</tr>
+<tr>
+<td>过程调用序列</td>
+<td>过程<strong>调用</strong>时执行的<strong>分配活动记录</strong>， 把信息填入它的域中， 使被调用过程可以开始执行的代码</td>
+<td></td>
+</tr>
+<tr>
+<td>过程返回序列</td>
+<td>被调用过程<strong>返回</strong>时执行的<strong>恢复机器状态</strong>  ，释放被调用过程活动记录， 使调用过程能够继续执行的代码</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>活动表的原则</strong>：之前介绍的顺序就是满足这些原则的一个结果，但是并不完全一样</p>
+<ul>
+<li>中间某个位置是<strong>基地址</strong>，向上增加元素，但是由于地址从高往低，即<strong>减去相应的偏移</strong></li>
+<li><strong>长度能较早确定</strong>的域放在活动记录的中间</li>
+<li>一般把临时数据域放在局部数据域的后面。但是现在局部变量的声明可以在中间，故可能这个原则不会完全成立。</li>
+<li>把<strong>参数域</strong>和可能有的<strong>返回值域</strong>放在紧靠调用者活动记录的地方（头头），并没有特别的顺序</li>
+<li>用<strong>同样的代码</strong>来<strong>执行</strong>各个活动的保存和恢复 ，即生成这个活动表的代码，最好都一样</li>
+</ul>
+<h3 id="调用序列实例-p调用q">调用序列实例  p调用q</h3>
+<div class="note success flat"><p>基准的变化相当于控制权的交付，俩调用都可以分为两部分表示不同过程作为主导</p>
+</div>
+<p><strong>过程</strong>：忽略原则中可颠倒的顺序，分为三个大块：返回值和参数，控制链和机器状态，局部数据临时数据，下面简写</p>
+<table>
+<thead>
+<tr>
+<th>过程</th>
+<th>描述</th>
+<th>基地址</th>
+<th>栈顶指针</th>
+<th>补充</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>p 初始</td>
+<td>p在调用之前</td>
+<td>存放在p的控制链</td>
+<td>在p的局部数据上面</td>
+<td></td>
+</tr>
+<tr>
+<td>p 实参和返回值</td>
+<td>p计算空间入栈</td>
+<td>-</td>
+<td>增加到返回值和参数上</td>
+<td></td>
+</tr>
+<tr>
+<td>p 返回地址和基地址</td>
+<td>p将其入栈，放入控制链</td>
+<td>新的基地址为栈顶指针，在<strong>q的控制链</strong></td>
+<td>在控制链上</td>
+<td>访问链c语言无，后续再说</td>
+</tr>
+<tr>
+<td>q 寄存器值和机器状态</td>
+<td>q 将当前的寄存器状态保存好</td>
+<td>-</td>
+<td>控制链上</td>
+<td>q知道自己要用那些寄存器，把p对应的寄存器保存即可</td>
+</tr>
+<tr>
+<td>q 局部和临时数据</td>
+<td>q计算后继续入栈</td>
+<td>-</td>
+<td>继续减小向上到局部数据以上</td>
+<td>初始化局部数据，开始执行过程体</td>
+</tr>
+</tbody>
+</table>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20221107085353985.png" alt="image-20221107085353985" style="zoom:67%;" />
+<h3 id="调用序列实例-q返回到p">调用序列实例  q返回到p</h3>
+<div class="note success flat"><p>我们增加栈顶指针的时候，即pop操作，数据都被抹去</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>过程</th>
+<th>描述</th>
+<th>基地址</th>
+<th>栈顶指针</th>
+<th>补充</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>q 初始</td>
+<td>上面的结束状态</td>
+<td>q的控制链</td>
+<td>q的临时数据上面</td>
+<td></td>
+</tr>
+<tr>
+<td>q 返回值</td>
+<td>放入返回值和参数</td>
+<td>-</td>
+<td>-</td>
+<td>顺序可变，很多使用寄存器返回（比如参数可变）</td>
+</tr>
+<tr>
+<td>q 释放临时数据</td>
+<td></td>
+<td>-</td>
+<td>增加到控制链上</td>
+<td></td>
+</tr>
+<tr>
+<td>q 恢复寄存器</td>
+<td>基地址更改，机器状态恢复，返回p</td>
+<td>返回到q的控制链位置</td>
+<td>返回值以上</td>
+<td>交付了控制权</td>
+</tr>
+<tr>
+<td>p 获取返回值</td>
+<td>根据参数个数和类型计算返回值位置</td>
+<td>-</td>
+<td>减少到q临时数据上</td>
+<td>结束</td>
+</tr>
+</tbody>
+</table>
+<p><strong>汇编实例</strong>：一个递归调用，<strong>无返回值的简单实例</strong></p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20221107090749051.png" alt="image-20221107090749051" style="zoom:67%;" />
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>说明</th>
+<th>补充</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>call</td>
+<td>函数的调用（汇编）</td>
+<td>功能简单，仅存返回地址，即在实参压栈后预留返回值的位置</td>
+</tr>
+<tr>
+<td>decl</td>
+<td>减法</td>
+<td></td>
+</tr>
+<tr>
+<td>movl</td>
+<td>将左侧的值赋给右边的地址</td>
+<td>图中j是基地址偏移量为4的局部数据（第一个声明）</td>
+</tr>
+<tr>
+<td>%esp</td>
+<td>地址存储的是 i 的值</td>
+<td></td>
+</tr>
+<tr>
+<td>%ebp</td>
+<td>基地址</td>
+<td>基地址减4向上找，这里是局部变量 j 的位置</td>
+</tr>
+<tr>
+<td>%eax</td>
+<td>实参的寄存器</td>
+<td></td>
+</tr>
+<tr>
+<td>pushl %eax</td>
+<td>实参入栈</td>
+<td>调用函数传入实参</td>
+</tr>
+<tr>
+<td>pushl %ebp</td>
+<td>老的基地址入栈</td>
+<td>这里是被调用函数进行，之前介绍的是调用者主动压栈，存放位置是访问链路（在此之前应该要压好实参和返回值的区域）</td>
+</tr>
+<tr>
+<td>movel %esp，%ebp</td>
+<td>将栈顶地址赋为新的基地址</td>
+<td>新的基地址位置此时在控制链上面，接下来应该是</td>
+</tr>
+<tr>
+<td>返回进入L1的leave</td>
+<td>mov ebp即pop局部变量，然后pop ebp恢复原基地址</td>
+<td></td>
+</tr>
+<tr>
+<td>ret</td>
+<td>ret即 pop 为下条指令地址</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>参数个数可变</strong>：</p>
+<ul>
+<li>
+<p>函数返回值改成用寄存器传递</p>
+</li>
+<li>
+<p>编译器产生将实参表达式<strong>逆序计算</strong>并将结果进栈的代码 ，根据参数一能够获取后续所有的内容</p>
+<blockquote>
+<p>比如printf 前面参数是一个字符串，如果是顺序的话，就要先放后面的变量，再确定输出串</p>
+</blockquote>
+</li>
+<li>
+<p>被调用函数能准确地知道第一个参数的位置</p>
+</li>
+<li>
+<p>被调用函数根据第一个参数到栈中取第二个，第三个参数等等</p>
+</li>
+</ul>
+<p><strong>栈上可变长数据</strong>：活动记录的长度在编译时不能确定的情况  ，比如局部数组大小等待激活确定，现代编程语言的通常将它们分配在堆上</p>
+<ul>
+<li></li>
+</ul>
+<p><strong>悬空引用</strong>：引用某个已被释放的存储单元</p>
+<h2 id="非局部名字的访问">非局部名字的访问</h2>
+<ul>
+<li>无过程嵌套的静态作用域（C语言）</li>
+<li>有过程嵌套的静态作用域（Pascal语言）</li>
+<li>动态作用域（Lisp语言）</li>
+</ul>
+<p><strong>访问链</strong>：非局部名字的</p>
+<h1 id="Chapter-7-中间代码生成">Chapter 7 中间代码生成</h1>
+<blockquote>
+<p>后缀，图形标识和三地址代码，</p>
+<p>使用语法制导定义和翻译方案说明源语言的构造</p>
+<p>要求熟练掌握三地址</p>
+<p>俩重点是数组元素的翻译方案和布尔表达式</p>
+</blockquote>
+<h2 id="中间语言">中间语言</h2>
+<p><strong>后缀表示</strong></p>
+<ul>
+<li>
+<p>和之前数据结构类似，两个运算数后的符号递归定义，我们词法定义按照这种递归即可</p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20221116103739065.png" alt="image-20221116103739065" style="zoom:67%;" />
+</li>
+</ul>
+<p>**图形表示  **</p>
+<ul>
+<li>
+<p>语法树：语法制导</p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20221116103849973.png" alt="image-20221116103849973" style="zoom:67%;" />
+</li>
+<li>
+<p>有向无环图：DAG ，将语法树的相同底层合并</p>
+</li>
+</ul>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20221116104122529.png" alt="image-20221116104122529" style="zoom:67%;" />
+<p><strong>三地址代码</strong>：图形表示的线性表示，即使用中间变量表示树节点</p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20221116104108043.png" alt="image-20221116104108043" style="zoom:67%;" />
+<blockquote>
+<p>本课程不要求严格按照书中的标准</p>
+</blockquote>
+<h3 id="静态单赋值形式">静态单赋值形式</h3>
+<ul>
+<li>每个变量只有一个定值点</li>
+<li>为了代码优化</li>
+<li>和三地址区别：所有赋值指令对不同名字的变量的赋值</li>
+</ul>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20221116104250519.png" alt="image-20221116104250519" style="zoom:67%;" />
+<h2 id="声明语句">声明语句</h2>
+<h2 id="赋值语句">赋值语句</h2>
+<h2 id="布尔表达式和控制流语句">布尔表达式和控制流语句</h2>
+<p>本节布尔表达式文法：</p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20221116104430510.png" alt="image-20221116104430510" style="zoom:80%;" />
+<blockquote>
+<p>布尔值用于计算逻辑真假以及条件控制等</p>
+</blockquote>
+<p><strong>计算方式</strong>：不同方式结果不同</p>
+<ul>
+<li>
+<p>完全计算，数值化类似于算数表达式</p>
+</li>
+<li>
+<p>短路计算，用控制流实现，用<strong>程序中的位置</strong>来表示值， 因为布尔表达式通常用来决定控制流走向</p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20221116105251828.png" alt="image-20221116105251828" style="zoom:67%;" />
+</li>
+</ul>
+<p><strong>控制流语句翻译示例</strong></p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20221116105428668.png" alt="image-20221116105428668" style="zoom:80%;" />
+<h4 id="For循环C语言">For循环C语言</h4>
+<ul>
+<li>将e3也写在后面但是e2判断后跳转</li>
+</ul>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20221118080118993.png" alt="image-20221118080118993" style="zoom:80%;" />
+<h4 id="数组或结构体直接赋值">数组或结构体直接赋值</h4>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20221118080417603.png" alt="image-20221118080417603" style="zoom:80%;" />
+<h1 id="Chapter-8-代码生成">Chapter 8   代码生成</h1>
+<blockquote>
+<p>中间代码-&gt;代码，简单的代码生成算法，其他的仅仅需要了解原理即可，不需要代码编写</p>
+</blockquote>
+<p><strong>概念</strong></p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>解释</th>
+<th>补充</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>绝对<strong>机器语言</strong>程序.exe</td>
+<td>目标程序装入内存的固定地方</td>
+<td>（粗略）相当于现在的可执行目标模块</td>
+</tr>
+<tr>
+<td><strong>汇编</strong>语言程序(汇编指令)</td>
+<td>免去编译器重复汇编器的工作 ，增加可读性</td>
+<td></td>
+</tr>
+<tr>
+<td>可重定位<strong>目标模块</strong></td>
+<td>汇编代码中含重定位信息  ，连接时更新重定位信息  ，允许程序模块分别编译  ， 允许调用其它先前编译好的程序模块</td>
+<td>代码模块前有<strong>L标号</strong></td>
+</tr>
+</tbody>
+</table>
+<details class="folding-tag" ><summary> 指令选择 </summary>
+              <div class='content'>
+              <p>我们的目标是生成目标机器指令系统，在此之前我们已经完成了前端的代码生成和优化，得到三地址代码后转化为对应指令系统的指令代码。</p><p>指令<strong>选择</strong>的依据</p><ul><li>指令系统的<strong>统一性和完备性</strong> ,eg RISC</li><li>指令的<strong>速度</strong>和<strong>机器</strong>特点</li><li><strong>覆盖</strong>中间表示</li><li>最优化指令选择<ul><li>指令数量</li><li>存储，运算代价</li><li>顺序</li></ul></li><li>目标机器的指令系统对<strong>寄存器</strong>的支持与约束</li></ul><blockquote><p>对于RISC和CISC的历史之前有提及，现在普及的是RISC，对于某些专用的添加CISC专用指令</p></blockquote>
+              </div>
+            </details>
+<p>另外指令执行次序很重要，但是最佳次序是NP完全问题</p>
+<p><strong>寄存器</strong></p>
+<ul>
+<li>指令短，执行快，少。要求尽可能多的使用。</li>
+<li>分配：某寄存器分配变量</li>
+<li>指派：某变量驻留寄存器</li>
+<li>描述：某寄存器存储某些变量（多个变量公用值）</li>
+<li>某些CPU使用某些运算的时候指定寄存器</li>
+</ul>
+<h2 id="目标机器">目标机器</h2>
+<blockquote>
+<p>目标机器的选择即指令系统，下面是课程假设的一些通用命令，选择一些微机代表的寄存器机器</p>
+</blockquote>
+<p><strong>Assume</strong></p>
+<ul>
+<li>
+<p>四个字节组成一个字，有n个通用寄存器R0,R1, …,Rn-1</p>
+</li>
+<li>
+<p><strong>二地址</strong>指令： op 源，目的</p>
+<ul>
+<li>
+<p>MOV  R0 ,M  或 MOV 4(R0) ,M 寄存器值或者加上4偏移存入地址M</p>
+</li>
+<li>
+<p>ADD {源加到目的}</p>
+</li>
+<li>
+<p>SUB {目的减去源}</p>
+</li>
+<li>
+<p>间接形式加前缀*</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>附加代价</strong></p>
+<ul>
+<li>
+<p>汇编指令翻译成机器指令时，指令内容占一个单元，源和目的可能占用<strong>额外的单元</strong>（存储代价） ，以<strong>字</strong>为单位，总代价为附加代价+1。</p>
+<ul>
+<li>本课程讨论的附加代价仅针对假设机器，且仅考虑存储代价，无运行代价</li>
+<li>寄存器不算附加代价，如果是变址会有偏移量的代价</li>
+</ul>
+  <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20221118090013137.png" alt="image-20221118090013137" style="zoom:80%;" />
+</li>
+</ul>
+<p><strong>流图和基本块概念</strong></p>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>解释</th>
+<th>补充</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>划分</strong>基本块</td>
+<td>1. 确定所有入口语句（第一个语句，跳转到的语句，转移语句之后的语句）<br />2. 俩入口之间是基本块</td>
+<td>基本块即连续语句，没有中间的跳转，会完整执行</td>
+</tr>
+<tr>
+<td><strong>流图</strong>画法</td>
+<td>首节点、前驱、后继、循环（强连通节点加唯一入口）分为内外循环</td>
+<td>流图即有向边表示基本块之间的<strong>控制流信息</strong>，无条件标注</td>
+</tr>
+<tr>
+<td><strong>定值</strong></td>
+<td>三地址x = y + z引用y和z并且对x定值</td>
+<td></td>
+</tr>
+<tr>
+<td>活跃</td>
+<td>名字的值在基本块的某一点以后<strong>还要引用</strong>的话， 则说这个名字（变量） 在该点是活跃的</td>
+<td>注意循环</td>
+</tr>
+<tr>
+<td>基本块的<strong>等价</strong></td>
+<td>出口点有同样的活跃变量集合，每个变量定义表达式相等</td>
+<td>很多等价的变换可以用于基本块</td>
+</tr>
+</tbody>
+</table>
+<p><strong>局部变换</strong></p>
+<ul>
+<li>删除局部公共子表达式
+<ul>
+<li>比如之前计算过b-c，在未改变上面俩值的前提下可以直接调用原本的计算值</li>
+</ul>
+</li>
+<li>删除死代码：计算的没用</li>
+<li>交换相邻语句：没有顺序要求，且非自变换</li>
+<li>代数变换：删除无意义运算如+0</li>
+</ul>
+<h3 id="流图">流图</h3>
+<ul>
+<li>可以看成一个不定指针的链表，有首节点、前驱后继。循环是指（循环内）所有节点强连通，有唯一的循环入口（出口可以有很多），分为内外循环（嵌套）。</li>
+<li><strong>下次引用信息</strong>：收集引用和定值信息，判断删除公共子表达式
+<ul>
+<li>得到：每个基本块从最后一个语句反向扫描到第一个语句（反推到定义）</li>
+<li>可以用来压缩临时变量空间</li>
+</ul>
+</li>
+</ul>
+<h2 id="一个简单的代码生成器">一个简单的代码生成器</h2>
+<blockquote>
+<p>基本考虑：全局信息未知时，以基本块为单位生成代码，每条语句进行代码生成，三地址语句的算符有目标机器算符，计算结果<strong>尽量存在寄存器</strong>中，除非寄存器需要用或者<strong>基本块结束</strong>。</p>
+</blockquote>
+<p><strong>寄存器描述和地址描述</strong></p>
+<ul>
+<li>目的寄存器目前的值是否活跃，如果不活跃，直接将加减法运算结果存储在其中</li>
+<li>对于ADD是直接将内存的值加入寄存器还是先MOV再移动</li>
+<li>跟踪寄存器内容（寄存器描述表）和<strong>名字</strong>地址（符号表）
+<ul>
+<li>若干个名字，b=q</li>
+<li>名字变量的地址描述记住目前名字的当前值是在寄存器、栈、还是内存地址等中找到</li>
+</ul>
+</li>
+</ul>
+<p><strong>代码生成算法</strong>（指针和变址也一样）</p>
+<ul>
+<li>对于x =y op z
+<ul>
+<li><strong>结果</strong>：函数getreg返回保存x = y op z的x值的场所<strong>L</strong>
+<ul>
+<li>如果y不再活跃，存在R中且无其他名字的值，则L=R</li>
+<li>返回空寄存器</li>
+<li>如果x活跃，或op必须用寄存器，解除一个占用（MOV）</li>
+<li>x不活跃或者无适当寄存器。选一个内存单元。</li>
+</ul>
+</li>
+<li>确定y的场所，如果y的值不在L中，产生指令MOV（放到寄存器中运算）</li>
+<li>运算</li>
+<li>如果yz的值不再被引用，块出口不活跃，且占着寄存器，则修改R描述</li>
+</ul>
+</li>
+</ul>
+<p><strong>修改与优化</strong></p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20221129222621572.png" alt="image-20221129222621572" style="zoom:67%;" />
+<p><strong>条件语句</strong></p>
+<p>条件转移的方式</p>
+<ul>
+<li>
+<p>根据寄存器的值为正负非负，零等，即状态寄存器</p>
+</li>
+<li>
+<p>条件码：使用一个新的汇编值 CMP（SUB，结果不保存），还是会判断状态寄存器</p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20221129222852412.png" alt="image-20221129222852412" style="zoom:67%;" />
+</li>
+</ul>
+<h3 id="一些例子">一些例子</h3>
+<details class="folding-tag" ><summary> 优化错误举例 </summary>
+              <div class='content'>
+              <ul><li>首先将i+1装入寄存器，后续计算i–</li><li>减少寄存器的分配，比起先把i+1放在寄存器中的方案，先计算函数，然后把i+1装进寄存器计算，函数返回时，i=0，且静态，之后所有的i都不变。</li></ul><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20221129223053699.png" alt="image-20221129223053699" style="zoom:67%;" /><ul><li>计算结果直接放在i的内存，最后相加的时候再取，第二次 i 保存为2，第一个数取出来是2，2+2+3=7，后面那个也类似。</li></ul><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20221129223112471.png" alt="image-20221129223112471" style="zoom:67%;" /><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20221129223134759.png" alt="image-20221129223134759" style="zoom:67%;" /><ul><li>左右运算的顺序，先右边，50+55</li></ul><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20221129224654806.png" alt="image-20221129224654806" style="zoom:67%;" />
+              </div>
+            </details>
+<p><strong>例子</strong></p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20221129224633538.png" alt="image-20221129224633538" style="zoom:80%;" />
+<ul>
+<li>结构导致</li>
+</ul>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20221129224929493.png" alt="image-20221129224929493" style="zoom:80%;" />
+<ul>
+<li>L1表示return；</li>
+</ul>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20221129224950478.png" alt="image-20221129224950478" style="zoom:80%;" />
+<h1 id="Chapter-9-独立于机器的分析">Chapter 9 独立于机器的分析</h1>
+<blockquote>
+<p>前端到中间代码生成都是一遍完成，后端可能会混着来几遍。</p>
+<p><strong>优化</strong>：程序变换（全局和局部），必须保证程序含义即安全稳妥，并且要值得</p>
+</blockquote>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20221129225302689.png" alt="image-20221129225302689" style="zoom:67%;" />
+<p>由实例-&gt;信息</p>
+<p>框架</p>
+<p>常量传播（了解）</p>
+<h2 id="优化的分类">优化的分类</h2>
+<blockquote>
+<p>很多优化程序员无能为力，比如数组的某个元素写入，必定要访问两次，同时编译的程序会有<strong>很多步的低级运算</strong>，也有很多<strong>公共</strong>的</p>
+</blockquote>
+<p><strong>可用表达式</strong>：若到点p的<strong>每条</strong>执行路径都计算x + y，并且计算后没有对x或y赋值，那么称x + y在点p可用 。</p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cdn.jsdelivr.net/gh/A-624/blog_img/img/image-20221125090904566.png" alt="image-20221125090904566" style="zoom:67%;" />
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cdn.jsdelivr.net/gh/A-624/blog_img/img/image-20221125091038001.png" alt="image-20221125091038001" style="zoom:67%;" />
+<blockquote>
+<p>分析一个表达式计算后到p点是否可用，要么没有更改值，要么更改值后重新计算。</p>
+</blockquote>
+<p><strong>代码外提</strong>：循环的优化，将while内部的表达式赋值到变量后，将变量作为判断循环的条件。</p>
+<p><strong>归纳变量删除和强度削弱</strong>：步伐变化一致的多个变量</p>
+<ul>
+<li>比如：i+=1; t2=4*i ; -&gt;i+=1; t2+=4;</li>
+</ul>
+<h2 id="数据流分析">数据流分析</h2>
+<p><strong>概念</strong></p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>解释</th>
+<th>补充</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>流图的程序点</td>
+<td>基本块中两相邻的语句之间</td>
+<td>基本块的开始点结束点之间无语句</td>
+</tr>
+<tr>
+<td>流图路径</td>
+<td>点序列，要么同一个基本块的连续点，要么一个是结束点，另一个是后继块的开始点</td>
+<td>针对顺序执行流图</td>
+</tr>
+</tbody>
+</table>
+<details class="folding-tag" ><summary> 流图路径 </summary>
+              <div class='content'>
+              <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="assets/image-20221130095953265.png" alt="image-20221130095953265" style="zoom:67%;" />
+              </div>
+            </details>
+<ul>
+<li>分析程序需要考虑<strong>所有执行路径</strong>，以及执行路径在<strong>多个流图</strong>之间的跳转</li>
+<li>从流图得到的程序执行<strong>路径数无限</strong>  ，长度无上界</li>
+<li>每个程序点的不同状态数（程序状态：存储单元到值的映射 ）也可能无限
+<ul>
+<li>不会试图得到每个点的完整状态或到达路径，而是抽取出特定数据流需要的信息（目的），总结出有限的事实</li>
+<li>事实和路径无关，仅与程序点有关</li>
+</ul>
+</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://a-624.github.io">A-624</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://a-624.github.io/post/1001.html">https://a-624.github.io/post/1001.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://a-624.github.io" target="_blank">Ann の 小窝</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a></div><div class="post_share"><div class="social-share" data-image="https://w.wallhaven.cc/full/gp/wallhaven-gpzve7.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/post/26403.html"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://s2.loli.net/2022/10/01/p6CQoLxsIWcu5zq.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">hexo 建站记录</div></div></a></div><div class="next-post pull-right"><a href="/post/1563.html"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://s2.loli.net/2022/10/01/p6CQoLxsIWcu5zq.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">md公式输入语法</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Chapter-1-%E6%A6%82%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">Chapter 1 概述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Chapter-2-%E8%AF%8D%E6%B3%95%E7%94%9F%E6%88%90"><span class="toc-number">2.</span> <span class="toc-text">Chapter 2 词法生成</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%81%E7%A8%8B%E5%9B%BE"><span class="toc-number">2.1.</span> <span class="toc-text">流程图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%8D%E6%B3%95%E8%AE%B0%E5%8F%B7%E7%9A%84%E6%8F%8F%E8%BF%B0%E5%92%8C%E8%AF%86%E5%88%AB"><span class="toc-number">2.2.</span> <span class="toc-text">词法记号的描述和识别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%B2%E5%92%8C%E8%AF%AD%E8%A8%80"><span class="toc-number">2.2.1.</span> <span class="toc-text">串和语言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A3%E8%A7%84%E5%BC%8F%EF%BC%9A"><span class="toc-number">2.2.2.</span> <span class="toc-text">正规式：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AC%E6%8D%A2%E5%9B%BE"><span class="toc-number">2.2.3.</span> <span class="toc-text">转换图</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%89%E9%99%90%E8%87%AA%E5%8A%A8%E6%9C%BA"><span class="toc-number">2.3.</span> <span class="toc-text">有限自动机</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E7%A1%AE%E5%AE%9A%E7%9A%84%E6%9C%89%E9%99%90%E8%87%AA%E5%8A%A8%E6%9C%BA%EF%BC%88NFA%EF%BC%89"><span class="toc-number">2.3.1.</span> <span class="toc-text">不确定的有限自动机（NFA）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A3%E8%A7%84%E5%BC%8F%E5%88%B0%E6%9C%89%E9%99%90%E8%87%AA%E5%8A%A8%E6%9C%BA"><span class="toc-number">2.4.</span> <span class="toc-text">正规式到有限自动机</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Chapter-3-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90"><span class="toc-number">3.</span> <span class="toc-text">Chapter 3 语法分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%81%E7%A8%8B%E5%9B%BE-2"><span class="toc-number">3.1.</span> <span class="toc-text">流程图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8A%E4%B8%8B%E6%96%87%E6%97%A0%E5%85%B3%E6%96%87%E6%B3%95"><span class="toc-number">3.2.</span> <span class="toc-text">上下文无关文法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E8%A8%80%E5%92%8C%E6%96%87%E6%B3%95"><span class="toc-number">3.3.</span> <span class="toc-text">语言和文法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A3%E8%A7%84%E5%BC%8F%E5%92%8C%E4%B8%8A%E4%B8%8B%E6%96%87%E6%97%A0%E5%85%B3%E6%96%87%E6%B3%95%E7%9A%84%E6%AF%94%E8%BE%83"><span class="toc-number">3.3.1.</span> <span class="toc-text">正规式和上下文无关文法的比较</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81%E6%96%87%E6%B3%95%E4%BA%A7%E7%94%9F%E7%9A%84%E8%AF%AD%E8%A8%80%EF%BC%9A"><span class="toc-number">3.3.2.</span> <span class="toc-text">验证文法产生的语言：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%82%E5%BD%93%E7%9A%84%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%96%87%E6%B3%95"><span class="toc-number">3.3.3.</span> <span class="toc-text">适当的表达式文法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B6%88%E9%99%A4%E4%BA%8C%E4%B9%89%E6%80%A7"><span class="toc-number">3.3.4.</span> <span class="toc-text">消除二义性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B6%88%E9%99%A4%E5%B7%A6%E9%80%92%E5%BD%92%EF%BC%9A"><span class="toc-number">3.3.5.</span> <span class="toc-text">消除左递归：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E5%B7%A6%E5%9B%A0%E5%AD%90"><span class="toc-number">3.3.6.</span> <span class="toc-text">提左因子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%9E%E4%B8%8A%E4%B8%8B%E6%96%87%E6%97%A0%E5%85%B3%E7%9A%84%E8%AF%AD%E8%A8%80%E6%9E%84%E9%80%A0%EF%BC%9A"><span class="toc-number">3.3.7.</span> <span class="toc-text">非上下文无关的语言构造：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E4%B8%8A%E8%80%8C%E4%B8%8B%E5%88%86%E6%9E%90%EF%BC%9A%E5%B1%95%E5%BC%80"><span class="toc-number">3.4.</span> <span class="toc-text">自上而下分析：展开</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#LL-1-%E6%96%87%E6%B3%95"><span class="toc-number">3.4.1.</span> <span class="toc-text">LL(1)文法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%92%E5%BD%92%E4%B8%8B%E9%99%8D%E7%9A%84%E9%A2%84%E6%B5%8B%E5%88%86%E6%9E%90"><span class="toc-number">3.4.2.</span> <span class="toc-text">**递归下降的预测分析  **</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%9E%E9%80%92%E5%BD%92%E7%9A%84%E9%A2%84%E6%B5%8B%E5%88%86%E6%9E%90%EF%BC%9A"><span class="toc-number">3.4.3.</span> <span class="toc-text">非递归的预测分析：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E9%A2%84%E6%B5%8B%E5%88%86%E6%9E%90%E8%A1%A8-M"><span class="toc-number">3.4.4.</span> <span class="toc-text">构造预测分析表 M</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%84%E6%B5%8B%E5%88%86%E6%9E%90%E7%9A%84%E9%94%99%E8%AF%AF%E6%81%A2%E5%A4%8D"><span class="toc-number">3.4.5.</span> <span class="toc-text">预测分析的错误恢复</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E4%B8%8B%E8%80%8C%E4%B8%8A%E5%88%86%E6%9E%90"><span class="toc-number">3.5.</span> <span class="toc-text">自下而上分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BD%92%E7%BA%A6%EF%BC%9A"><span class="toc-number">3.5.1.</span> <span class="toc-text">归约：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A7%BB%E8%BF%9B%E5%92%8C%E5%BD%92%E7%BA%A6%E7%9A%84%E5%86%B2%E7%AA%81"><span class="toc-number">3.5.1.1.</span> <span class="toc-text">移进和归约的冲突</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LR%E5%88%86%E6%9E%90%E5%99%A8"><span class="toc-number">3.6.</span> <span class="toc-text">LR分析器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%84%E9%80%A0SLR%E5%88%86%E6%9E%90%E8%A1%A8"><span class="toc-number">3.7.</span> <span class="toc-text">构造SLR分析表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8E%E6%96%87%E6%B3%95%E6%9E%84%E9%80%A0%E8%AF%86%E5%88%AB%E6%B4%BB%E5%89%8D%E7%BC%80%E7%9A%84DFA"><span class="toc-number">3.7.1.</span> <span class="toc-text">从文法构造识别活前缀的DFA</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BD%AC%E7%A7%BB%E5%87%BD%E6%95%B0-goto-I-X"><span class="toc-number">3.7.1.1.</span> <span class="toc-text">转移函数 goto(I, X)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8E%E8%AF%86%E5%88%AB%E6%B4%BB%E5%89%8D%E7%BC%80%E7%9A%84DFA%E6%9E%84%E9%80%A0SLR%E5%88%86%E6%9E%90%E8%A1%A8"><span class="toc-number">3.7.2.</span> <span class="toc-text">从识别活前缀的DFA构造SLR分析表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E6%99%AE%E9%81%8D%E6%84%8F%E4%B9%89%E4%B8%8A%E7%9A%84LR%E5%88%86%E6%9E%90%E7%A8%8B%E5%BA%8F"><span class="toc-number">3.7.3.</span> <span class="toc-text">一个普遍意义上的LR分析程序</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E8%A7%84%E8%8C%83%E7%9A%84LR%E5%88%86%E6%9E%90%E8%A1%A8"><span class="toc-number">3.8.</span> <span class="toc-text">构造规范的LR分析表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%84%E9%80%A0LALR%E5%88%86%E6%9E%90%E8%A1%A8"><span class="toc-number">3.9.</span> <span class="toc-text">构造LALR分析表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A4%E6%96%AD%E6%96%87%E6%B3%95"><span class="toc-number">3.10.</span> <span class="toc-text">判断文法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Chapter-4%E8%AF%AD%E6%B3%95%E5%88%B6%E5%AF%BC%E7%9A%84%E7%BF%BB%E8%AF%91"><span class="toc-number">4.</span> <span class="toc-text">Chapter 4语法制导的翻译</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95%E5%88%B6%E5%AF%BC%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-number">4.1.</span> <span class="toc-text">语法制导的定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CFG%E7%AC%A6%E5%8F%B7%E7%BB%91%E5%AE%9A%E5%B1%9E%E6%80%A7"><span class="toc-number">4.2.</span> <span class="toc-text">CFG符号绑定属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#S-%E5%B1%9E%E6%80%A7%E5%AE%9A%E4%B9%89%E7%9A%84%E8%87%AA%E4%B8%8B%E8%80%8C%E4%B8%8A%E8%AE%A1%E7%AE%97"><span class="toc-number">4.3.</span> <span class="toc-text">S 属性定义的自下而上计算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%E7%9A%84%E5%90%8C%E6%97%B6%E8%BF%9B%E8%A1%8C%E7%BB%BC%E5%90%88%E5%B1%9E%E6%80%A7%E7%9A%84%E8%AE%A1%E7%AE%97"><span class="toc-number">4.3.1.</span> <span class="toc-text">语法分析的同时进行综合属性的计算</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#L%E5%B1%9E%E6%80%A7%E5%AE%9A%E4%B9%89%E7%9A%84%E8%87%AA%E4%B8%8A%E8%80%8C%E4%B8%8B%E8%AE%A1%E7%AE%97"><span class="toc-number">4.4.</span> <span class="toc-text">L属性定义的自上而下计算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#L%E5%B1%9E%E6%80%A7%E5%AE%9A%E4%B9%89"><span class="toc-number">4.4.1.</span> <span class="toc-text">L属性定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BF%BB%E8%AF%91%E6%96%B9%E6%A1%88%EF%BC%9A%E7%BB%91%E5%AE%9A%E8%AF%AD%E4%B9%89%E5%8A%A8%E4%BD%9C%E4%B8%8E%E4%BA%A7%E7%94%9F%E5%BC%8F"><span class="toc-number">4.4.2.</span> <span class="toc-text">翻译方案：绑定语义动作与产生式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%84%E6%B5%8B%E7%BF%BB%E8%AF%91%E5%99%A8%E7%9A%84%E8%AE%BE%E8%AE%A1"><span class="toc-number">4.5.</span> <span class="toc-text">预测翻译器的设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#S%E5%B1%9E%E6%80%A7%E5%AE%9A%E4%B9%89%E7%9A%84%E9%80%92%E5%BD%92%E4%B8%8B%E9%99%8D%E9%A2%84%E6%B5%8B%E5%88%86%E6%9E%90%E5%AE%9E%E7%8E%B0%EF%BC%9A%E8%AE%A1%E7%AE%97%E9%83%BD%E5%9C%A8%E4%BA%A7%E7%94%9F%E5%BC%8F%E7%9A%84%E5%8F%B3%E7%AB%AF"><span class="toc-number">4.5.1.</span> <span class="toc-text">S属性定义的递归下降预测分析实现：计算都在产生式的右端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#L%E5%B1%9E%E6%80%A7%E5%AE%9A%E4%B9%89%E7%9A%84%E9%80%92%E5%BD%92%E4%B8%8B%E9%99%8D%E9%A2%84%E6%B5%8B%E5%88%86%E6%9E%90%E5%AE%9E%E7%8E%B0"><span class="toc-number">4.5.2.</span> <span class="toc-text">L属性定义的递归下降预测分析实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#L%E5%B1%9E%E6%80%A7%E5%AE%9A%E4%B9%89%E7%9A%84%E8%87%AA%E4%B8%8B%E8%80%8C%E4%B8%8A%E8%AE%A1%E7%AE%97"><span class="toc-number">4.6.</span> <span class="toc-text">L属性定义的自下而上计算</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Chapter-5-%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5"><span class="toc-number">5.</span> <span class="toc-text">Chapter 5 类型检查</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="toc-number">5.1.</span> <span class="toc-text">编程语言中的类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E5%8C%96%E8%AF%AD%E8%A8%80%E5%92%8C%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F"><span class="toc-number">5.1.1.</span> <span class="toc-text">类型化语言和类型系统</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F"><span class="toc-number">5.2.</span> <span class="toc-text">类型系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5"><span class="toc-number">5.3.</span> <span class="toc-text">类型检查</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5%E5%99%A8"><span class="toc-number">5.3.1.</span> <span class="toc-text">类型检查器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E7%9A%84%E6%A3%80%E6%9F%A5"><span class="toc-number">5.3.2.</span> <span class="toc-text">类型转换的检查</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E6%80%81%E5%87%BD%E6%95%B0"><span class="toc-number">5.4.</span> <span class="toc-text">多态函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E6%80%81%E8%AF%AD%E8%A8%80%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5"><span class="toc-number">5.4.1.</span> <span class="toc-text">多态语言类型检查</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E7%AD%89%E4%BB%B7"><span class="toc-number">5.5.</span> <span class="toc-text">类型表达式的等价</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E7%AD%89%E4%BB%B7"><span class="toc-number">5.5.1.</span> <span class="toc-text">结构等价</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8D%E5%AD%97%E7%AD%89%E4%BB%B7"><span class="toc-number">5.5.2.</span> <span class="toc-text">名字等价</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%92%8C%E7%AE%97%E7%AC%A6%E7%9A%84%E9%87%8D%E8%BD%BD"><span class="toc-number">5.6.</span> <span class="toc-text">函数和算符的重载</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E5%85%AD%E7%AB%A0-%E8%BF%90%E8%A1%8C%E6%97%B6%E5%AD%98%E5%82%A8%E7%A9%BA%E9%97%B4%E7%9A%84%E7%BB%84%E7%BB%87%E5%92%8C%E7%AE%A1%E7%90%86"><span class="toc-number">6.</span> <span class="toc-text">第六章 运行时存储空间的组织和管理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%A7%88"><span class="toc-number">6.1.</span> <span class="toc-text">概览</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B1%80%E9%83%A8%E5%AD%98%E5%82%A8%E5%88%86%E9%85%8D-%EF%BC%9A%E7%B1%BB%E4%BC%BC%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8"><span class="toc-number">6.2.</span> <span class="toc-text">局部存储分配  ：类似函数调用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E6%A0%88%E5%BC%8F%E5%AD%98%E5%82%A8%E5%88%86%E9%85%8D"><span class="toc-number">6.3.</span> <span class="toc-text">全局栈式存储分配</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5"><span class="toc-number">6.3.1.</span> <span class="toc-text">分配策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E5%88%92%E5%88%86"><span class="toc-number">6.3.2.</span> <span class="toc-text">内存划分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B1%87%E7%BC%96%E4%B8%8E%E5%8F%98%E9%87%8F"><span class="toc-number">6.3.3.</span> <span class="toc-text">汇编与变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B4%BB%E5%8A%A8%E6%A0%91%E5%92%8C%E8%BF%90%E8%A1%8C%E6%A0%88"><span class="toc-number">6.3.4.</span> <span class="toc-text">活动树和运行栈</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B0%83%E7%94%A8%E5%BA%8F%E5%88%97%E5%AE%9E%E4%BE%8B-p%E8%B0%83%E7%94%A8q"><span class="toc-number">6.3.5.</span> <span class="toc-text">调用序列实例  p调用q</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B0%83%E7%94%A8%E5%BA%8F%E5%88%97%E5%AE%9E%E4%BE%8B-q%E8%BF%94%E5%9B%9E%E5%88%B0p"><span class="toc-number">6.3.6.</span> <span class="toc-text">调用序列实例  q返回到p</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%9E%E5%B1%80%E9%83%A8%E5%90%8D%E5%AD%97%E7%9A%84%E8%AE%BF%E9%97%AE"><span class="toc-number">6.4.</span> <span class="toc-text">非局部名字的访问</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Chapter-7-%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90"><span class="toc-number">7.</span> <span class="toc-text">Chapter 7 中间代码生成</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E9%97%B4%E8%AF%AD%E8%A8%80"><span class="toc-number">7.1.</span> <span class="toc-text">中间语言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%8D%95%E8%B5%8B%E5%80%BC%E5%BD%A2%E5%BC%8F"><span class="toc-number">7.1.1.</span> <span class="toc-text">静态单赋值形式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A3%B0%E6%98%8E%E8%AF%AD%E5%8F%A5"><span class="toc-number">7.2.</span> <span class="toc-text">声明语句</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B5%8B%E5%80%BC%E8%AF%AD%E5%8F%A5"><span class="toc-number">7.3.</span> <span class="toc-text">赋值语句</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%83%E5%B0%94%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%92%8C%E6%8E%A7%E5%88%B6%E6%B5%81%E8%AF%AD%E5%8F%A5"><span class="toc-number">7.4.</span> <span class="toc-text">布尔表达式和控制流语句</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#For%E5%BE%AA%E7%8E%AFC%E8%AF%AD%E8%A8%80"><span class="toc-number">7.4.0.1.</span> <span class="toc-text">For循环C语言</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E6%88%96%E7%BB%93%E6%9E%84%E4%BD%93%E7%9B%B4%E6%8E%A5%E8%B5%8B%E5%80%BC"><span class="toc-number">7.4.0.2.</span> <span class="toc-text">数组或结构体直接赋值</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Chapter-8-%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90"><span class="toc-number">8.</span> <span class="toc-text">Chapter 8   代码生成</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E6%A0%87%E6%9C%BA%E5%99%A8"><span class="toc-number">8.1.</span> <span class="toc-text">目标机器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%81%E5%9B%BE"><span class="toc-number">8.1.1.</span> <span class="toc-text">流图</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90%E5%99%A8"><span class="toc-number">8.2.</span> <span class="toc-text">一个简单的代码生成器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E4%BE%8B%E5%AD%90"><span class="toc-number">8.2.1.</span> <span class="toc-text">一些例子</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Chapter-9-%E7%8B%AC%E7%AB%8B%E4%BA%8E%E6%9C%BA%E5%99%A8%E7%9A%84%E5%88%86%E6%9E%90"><span class="toc-number">9.</span> <span class="toc-text">Chapter 9 独立于机器的分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-number">9.1.</span> <span class="toc-text">优化的分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%B5%81%E5%88%86%E6%9E%90"><span class="toc-number">9.2.</span> <span class="toc-text">数据流分析</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By A-624</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="algolia-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="search-wrap"><div id="algolia-search-input"></div><hr/><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-info"><div class="algolia-stats"></div><div class="algolia-poweredBy"></div></div></div></div></div><div id="search-mask"></div></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="fa-solid fa-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="fa-solid fa-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="fa-solid fa-arrow-rotate-right"></i></div><div class="rightMenu-item" id="menu-home"><i class="fa-solid fa-house"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" href="/categories/"><i class="fa-solid fa-folder-open"></i><span>文章分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="fa-solid fa-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuNormal"><div class="rightMenu-item" id="menu-translate"><i class="fa-solid fa-earth-asia"></i><span>繁简切换</span></div><div class="rightMenu-item" id="menu-darkmode"><i class="fa-solid fa-moon"></i><span>切换模式</span></div><div class="rightMenu-item" id="menu-print"><i class="fa-solid fa-print fa-fw"></i><span>打印页面</span></div></div></div><div id="rightmenu-mask"></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/algoliasearch/dist/algoliasearch-lite.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instantsearch.js/dist/instantsearch.production.min.js"></script><script src="/js/search/algolia.js"></script><script async="async">var preloader = {
   endLoading: () => {
     document.body.style.overflow = 'auto';
     document.getElementById('loading-box').classList.add("loaded")
@@ -1396,7 +2415,7 @@ chatBtnFn()
 </script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><!-- hexo injector body_end start --><script data-pjax>
     function butterfly_categories_card_injector_config(){
       var parent_div_git = document.getElementById('recent-posts');
-      var item_html = '<style>li.categoryBar-list-item{width:32.3%;}.categoryBar-list{max-height: 190px;overflow:auto;}.categoryBar-list::-webkit-scrollbar{width:0!important}@media screen and (max-width: 650px){.categoryBar-list{max-height: 160px;}}</style><div class="recent-post-item" style="height:auto;width:100%;padding:0px;"><div id="categoryBar"><ul class="categoryBar-list"><li class="categoryBar-list-item" style="background:url(https://s2.loli.net/2022/11/06/zEXFSDwsGMpxf3R.png);"> <a class="categoryBar-list-link" href="categories/notebook/">notebook</a><span class="categoryBar-list-count">6</span><span class="categoryBar-list-descr"></span></li><li class="categoryBar-list-item" style="background:url(https://s2.loli.net/2022/11/06/eLUA2PoIQBfu3hS.png);"> <a class="categoryBar-list-link" href="categories/tool/">tool</a><span class="categoryBar-list-count">3</span><span class="categoryBar-list-descr"></span></li><li class="categoryBar-list-item" style="background:url(https://s2.loli.net/2022/11/06/lgYVqNypjRCe3d2.png);"> <a class="categoryBar-list-link" href="categories/coding/">coding</a><span class="categoryBar-list-count">1</span><span class="categoryBar-list-descr"></span></li><li class="categoryBar-list-item" style="background:url(https://s2.loli.net/2022/11/06/BQZan4FDflVe1t2.png);"> <a class="categoryBar-list-link" href="categories/blog/">blog</a><span class="categoryBar-list-count">1</span><span class="categoryBar-list-descr"></span></li><li class="categoryBar-list-item" style="background:url(https://s2.loli.net/2022/11/06/9lDYIQiJGjkaM1L.png);"> <a class="categoryBar-list-link" href="categories/experiment/">experiment</a><span class="categoryBar-list-count">3</span><span class="categoryBar-list-descr"></span></li><li class="categoryBar-list-item" style="background:url(https://s2.loli.net/2022/11/06/ZnRYVAI598EGQ7X.png);"> <a class="categoryBar-list-link" href="categories/expriment/">expriment</a><span class="categoryBar-list-count">1</span><span class="categoryBar-list-descr"></span></li><li class="categoryBar-list-item" style="background:url(undefined);"> <a class="categoryBar-list-link" href="categories/实验室/">实验室</a><span class="categoryBar-list-count">1</span><span class="categoryBar-list-descr"></span></li><li class="categoryBar-list-item" style="background:url(undefined);"> <a class="categoryBar-list-link" href="categories/bibi/">bibi</a><span class="categoryBar-list-count">1</span><span class="categoryBar-list-descr"></span></li></ul></div></div>';
+      var item_html = '<style>li.categoryBar-list-item{width:32.3%;}.categoryBar-list{max-height: 190px;overflow:auto;}.categoryBar-list::-webkit-scrollbar{width:0!important}@media screen and (max-width: 650px){.categoryBar-list{max-height: 160px;}}</style><div class="recent-post-item" style="height:auto;width:100%;padding:0px;"><div id="categoryBar"><ul class="categoryBar-list"><li class="categoryBar-list-item" style="background:url(https://s2.loli.net/2022/11/06/zEXFSDwsGMpxf3R.png);"> <a class="categoryBar-list-link" href="categories/notebook/">notebook</a><span class="categoryBar-list-count">6</span><span class="categoryBar-list-descr"></span></li><li class="categoryBar-list-item" style="background:url(https://s2.loli.net/2022/11/06/eLUA2PoIQBfu3hS.png);"> <a class="categoryBar-list-link" href="categories/tool/">tool</a><span class="categoryBar-list-count">3</span><span class="categoryBar-list-descr"></span></li><li class="categoryBar-list-item" style="background:url(https://s2.loli.net/2022/11/06/lgYVqNypjRCe3d2.png);"> <a class="categoryBar-list-link" href="categories/coding/">coding</a><span class="categoryBar-list-count">1</span><span class="categoryBar-list-descr"></span></li><li class="categoryBar-list-item" style="background:url(https://s2.loli.net/2022/11/06/BQZan4FDflVe1t2.png);"> <a class="categoryBar-list-link" href="categories/blog/">blog</a><span class="categoryBar-list-count">1</span><span class="categoryBar-list-descr"></span></li><li class="categoryBar-list-item" style="background:url(https://s2.loli.net/2022/11/06/9lDYIQiJGjkaM1L.png);"> <a class="categoryBar-list-link" href="categories/experiment/">experiment</a><span class="categoryBar-list-count">1</span><span class="categoryBar-list-descr"></span></li><li class="categoryBar-list-item" style="background:url(https://s2.loli.net/2022/11/06/ZnRYVAI598EGQ7X.png);"> <a class="categoryBar-list-link" href="categories/expriment/">expriment</a><span class="categoryBar-list-count">1</span><span class="categoryBar-list-descr"></span></li><li class="categoryBar-list-item" style="background:url(undefined);"> <a class="categoryBar-list-link" href="categories/实验室/">实验室</a><span class="categoryBar-list-count">1</span><span class="categoryBar-list-descr"></span></li></ul></div></div>';
       console.log('已挂载butterfly_categories_card')
       parent_div_git.insertAdjacentHTML("afterbegin",item_html)
       }
@@ -1406,7 +2425,7 @@ chatBtnFn()
   </script><script data-pjax>
   function butterfly_swiper_injector_config(){
     var parent_div_git = document.getElementById('recent-posts');
-    var item_html = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms;"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="post/1563.html" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://s2.loli.net/2022/10/01/p6CQoLxsIWcu5zq.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2022-08-31</span><a class="blog-slider__title" href="post/1563.html" alt="">md公式输入语法</a><div class="blog-slider__text">常用的公式输入方法</div><a class="blog-slider__button" href="post/1563.html" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="post/6bfa58f8.html" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://s2.loli.net/2022/08/14/r5bqM3IHz2w9smc.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2022-10-26</span><a class="blog-slider__title" href="post/6bfa58f8.html" alt="">C 与数据结构</a><div class="blog-slider__text">c语言知识整合</div><a class="blog-slider__button" href="post/6bfa58f8.html" alt="">详情   </a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    var item_html = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms;"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="post/6bfa58f8.html" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://s2.loli.net/2022/08/14/r5bqM3IHz2w9smc.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2022-10-26</span><a class="blog-slider__title" href="post/6bfa58f8.html" alt="">C 与数据结构</a><div class="blog-slider__text">c语言知识整合</div><a class="blog-slider__button" href="post/6bfa58f8.html" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="post/1563.html" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://s2.loli.net/2022/10/01/p6CQoLxsIWcu5zq.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2022-08-31</span><a class="blog-slider__title" href="post/1563.html" alt="">md公式输入语法</a><div class="blog-slider__text">常用的公式输入方法</div><a class="blog-slider__button" href="post/1563.html" alt="">详情   </a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
     console.log('已挂载butterfly_swiper')
     parent_div_git.insertAdjacentHTML("afterbegin",item_html)
     }
@@ -1427,7 +2446,7 @@ chatBtnFn()
   else if (epage === cpage){
     butterfly_swiper_injector_config();
   }
-  </script><script defer src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.js"></script><script defer data-pjax src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper_init.js"></script><script data-pjax src="https://npm.elemecdn.com/hexo-filter-gitcalendar/lib/gitcalendar.js"></script><script data-pjax>
+  </script><script defer src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.js"></script><script defer data-pjax src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper_init.js"></script><script async src="//at.alicdn.com/t/font_2032782_8d5kxvn09md.js"></script><script data-pjax src="https://npm.elemecdn.com/hexo-filter-gitcalendar/lib/gitcalendar.js"></script><script data-pjax>
   function gitcalendar_injector_config(){
       var parent_div_git = document.getElementById('recent-posts');
       var item_html = '<div class="recent-post-item" style="width:100%;height:auto;padding:10px;"><style>#git_container{min-height: 280px}@media screen and (max-width:650px) {#git_container{min-height: 0px}}</style><div id="git_loading" style="width:10%;height:100%;margin:0 auto;display: block;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50" xml:space="preserve"><path fill="#d0d0d0" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z" transform="rotate(275.098 25 25)"><animatetransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite"></animatetransform></path></svg><style>#git_container{display: none;}</style></div><div id="git_container"></div></div>';
@@ -1439,4 +2458,4 @@ chatBtnFn()
         gitcalendar_injector_config()
         GitCalendarInit("https://calendar-a-624.vercel.app/api?A-624",['rgb(145, 145, 145, 0.2)', '#c6ecc1', '#a0e2bb', '#1fc7b6', '#70c5d3', '#60a2ce', '#507ac9', '#4356c5', '#423cc4', '#5b3abc', '#7138b6'],'A-624')
     }
-  </script><script async src="//at.alicdn.com/t/font_2032782_8d5kxvn09md.js"></script><!-- hexo injector body_end end --></body></html>
+  </script><!-- hexo injector body_end end --></body></html>
