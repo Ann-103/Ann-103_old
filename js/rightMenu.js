@@ -193,6 +193,7 @@ $("#rightmenu-mask").contextmenu(function () {
     return false;
 });
 
+//这里应该是首页轮播的代码，不用了
 if (document.querySelector('#bber-talk')) {
     var swiper = new Swiper('.swiper-container', {
       direction: 'vertical', // 垂直切换选项
